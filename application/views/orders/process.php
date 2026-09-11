@@ -149,6 +149,46 @@ $(document).ready(function() {
     'order': []
   });
 
+  // quick change of status: Not Processed -> Under Process -> Processed
+  $(document).on('click', '.btn-process-status', function(){
+    var btn = $(this);
+    var order_id = btn.data('id');
+    var status = btn.data('status');
+
+    if(!order_id) { return; }
+
+    btn.prop('disabled', true);
+
+    $.ajax({
+      url: base_url + 'orders/updateProcessStatusAjax',
+      type: 'POST',
+      data: {order_id: order_id, status: status},
+      dataType: 'json',
+      success:function(response) {
+        if(response.success === true) {
+          $("#messages").html('<div class="alert alert-success alert-dismissible" role="alert">'+
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+            '<strong> <span class="glyphicon glyphicon-ok-sign"></span> </strong>'+response.messages+
+          '</div>');
+          manageTable.ajax.reload(null, false);
+        } else {
+          btn.prop('disabled', false);
+          $("#messages").html('<div class="alert alert-warning alert-dismissible" role="alert">'+
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+            '<strong> <span class="glyphicon glyphicon-exclamation-sign"></span> </strong>'+response.messages+
+          '</div>');
+        }
+      },
+      error:function() {
+        btn.prop('disabled', false);
+        $("#messages").html('<div class="alert alert-danger alert-dismissible" role="alert">'+
+          '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+          '<strong>Request error. Please try again.</strong>'+
+        '</div>');
+      }
+    });
+  });
+
 });
 
 // remove functions 

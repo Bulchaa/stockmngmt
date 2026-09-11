@@ -131,13 +131,14 @@ public function getPaymentData($id = null)
     		'customer_name' => $this->input->post('customer_name'),
     			'total_amount' => $this->input->post('net_amount_value'),
                    
-                    'paid_amount' => $this->input->post('paid_amount'),
+'paid_amount' => $this->input->post('paid_amount'),
                     'payment_types' => $this->input->post('paid_type'),
                     'payment_status' => $this->input->post('paid_status'),
                     'datetime' => strtotime(date('Y-m-d h:i:s a')),
-    			'tt_number' => $this->input->post('tt_number'),
-    			'due_amount' => $this->input->post('due_amount_value'),
-    			
+	    			'tt_number' => $this->input->post('tt_number'),
+	    			'due_amount' => $this->input->post('due_amount_value'),
+	    			'bank_account_id' => $this->input->post('paid_bank'),
+	    			
                 );
                 $this->db->insert('payment', $payment);
 		$this->load->model('model_products');
@@ -214,13 +215,14 @@ $payment = array (
     		'customer_name' => $this->input->post('customer_name'),
     			'total_amount' => $this->input->post('net_amount_value'),
                    
-                    'paid_amount' => $this->input->post('paid_amount'),
+'paid_amount' => $this->input->post('paid_amount'),
                     'payment_types' => $this->input->post('paid_type'),
                     'payment_status' => $this->input->post('paid_status'),
                     'datetime' => strtotime(date('Y-m-d h:i:s a')),
-    			'tt_number' => $this->input->post('tt_number'),
-    			'due_amount' => $this->input->post('due_amount_value'),
-    			
+	    			'tt_number' => $this->input->post('tt_number'),
+	    			'due_amount' => $this->input->post('due_amount_value'),
+	    			'bank_account_id' => $this->input->post('paid_bank'),
+	    			
                 );
                 $this->db->insert('payment', $payment);
 		$this->load->model('model_products');
@@ -459,6 +461,38 @@ public function paymentupdate1($id)
 
 			return true;
 		}
+	}
+
+	/*
+	* Updates the process status of an order (0=not processed, 1=under process, 2=processed/delivered)
+	* and records/updates the process row. Used by the quick status buttons on the process pages.
+	*/
+	public function updateProcessStatus($order_id, $status)
+	{
+		if(!$order_id || !in_array((int)$status, array(0, 1, 2))) {
+			return false;
+		}
+
+		$order_query = $this->db->query("SELECT bill_no FROM `orders` WHERE id = ?", array($order_id));
+		$order_row = $order_query->row_array();
+
+		$this->db->where('id', $order_id);
+		$this->db->update('orders', array('process_status' => (int)$status));
+
+		if($order_row && (int)$status > 0) {
+			$this->db->where('order_no', $order_id);
+			$this->db->delete('process');
+
+			$items = array(
+				'bill_no' => $order_row['bill_no'],
+				'process_status' => (int)$status,
+				'processed_date' => strtotime(date('Y-m-d h:i:s a')),
+				'order_no' => $order_id
+			);
+			$this->db->insert('process', $items);
+		}
+
+		return true;
 	}
  
         public function update1($id)

@@ -37,9 +37,16 @@ class Banks extends Admin_Controller
 	*/
 	public function fetchBankData()
 	{
-		$result = array('data' => array());
+		$result = array(
+			'draw' => (isset($_REQUEST['draw']) ? (int)$_REQUEST['draw'] : 0),
+			'recordsTotal' => 0,
+			'recordsFiltered' => 0,
+			'data' => array()
+		);
 
 		$data = $this->model_banks->getBankData();
+		$result['recordsTotal'] = count($data);
+		$result['recordsFiltered'] = count($data);
 		foreach ($data as $key => $value) {
 
 			// button
@@ -78,8 +85,12 @@ class Banks extends Admin_Controller
 	* returns the data into json format. 
 	* This function is invoked from the view page.
 	*/
-	public function fetchBankDataById($id)
+	public function fetchBankDataById($id = null)
 	{
+		if(!$id) {
+			$id = $this->input->post('id');
+		}
+
 		if($id) {
 			$data = $this->model_banks->getBankData($id);
 			echo json_encode($data);
@@ -151,13 +162,17 @@ class Banks extends Admin_Controller
 	* and if the validation is successfully then it updates the data into the database 
 	* and returns the json format operation messages
 	*/
-	public function update($id)
+	public function update($id = null)
 	{
 		if(!in_array('updateSetting', $this->permission)) {
 			redirect('dashboard', 'refresh');
 		}
 
 		$response = array();
+
+		if(!$id) {
+			$id = $this->input->post('id');
+		}
 
 		if($id) {
 			$this->form_validation->set_rules('edit_bank_name', 'Bank / Account Name', 'trim|required');
@@ -218,6 +233,9 @@ class Banks extends Admin_Controller
 		}
 		
 		$bank_id = $this->input->post('bank_id');
+		if(!$bank_id) {
+			$bank_id = $this->input->post('id');
+		}
 		$response = array();
 		if($bank_id) {
 			$delete = $this->model_banks->remove($bank_id);

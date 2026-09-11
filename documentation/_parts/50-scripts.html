@@ -1,0 +1,408 @@
+/* =====================================================================
+   SOORA ERP Documentation — behaviour layer
+   (continues the script block opened in the i18n part)
+===================================================================== */
+(function () {
+  "use strict";
+
+  /* ---------------- ELEMENT CACHE ---------------- */
+  var searchInput = document.getElementById("searchInput");
+  var searchBox = document.getElementById("searchResults");
+  var sidebar = document.getElementById("sidebar");
+  var burgerBtn = document.getElementById("burgerBtn");
+  var langBtn = document.getElementById("langBtn");
+  var langMenu = document.getElementById("langMenu");
+  var yearEl = document.getElementById("year");
+  var body = document.body;
+
+  var STORAGE_KEY = "qubeteck-docs-lang";
+  var SUPPORT_MAIL = "support@yourcompany.com";
+
+  /* ---------------- STORE ORIGINAL ENGLISH TEXT ---------------- */
+  var enCache = {};
+  document.querySelectorAll("[data-i18n]").forEach(function (el) {
+    enCache[el.getAttribute("data-i18n")] = el.innerHTML;
+  });
+
+  /* ---------------- APPLY LANGUAGE ---------------- */
+  function dict(lang) {
+    return (typeof I18N === "object" && I18N[lang]) || {};
+  }
+
+  function applyTextNodes(lang) {
+    var d = dict(lang);
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n");
+      var html = enCache[key];
+      if (lang !== "en" && d[key]) html = d[key];
+      if (html !== undefined && el.innerHTML !== html) el.innerHTML = html;
+      if (lang !== "en" && !d[key]) el.classList.add("trans-missing");
+      else el.classList.remove("trans-missing");
+    });
+  }
+
+  function applyPlaceholders(lang) {
+    var d = dict(lang);
+    var keys = ["data-i18n-placeholder", "data-i18n-attr-placeholder"];
+    keys.forEach(function (attr) {
+      document.querySelectorAll("[" + attr + "]").forEach(function (el) {
+        var key = el.getAttribute(attr);
+        var val = lang === "en" ? el.getAttribute("data-org-ph") : (d[key] || el.getAttribute("data-org-ph"));
+        el.setAttribute("placeholder", val || "");
+      });
+    });
+  }
+
+  function markCurrentItem(lang) {
+    langMenu.querySelectorAll("button").forEach(function (b) {
+      var cur = b.getAttribute("data-lang") === lang;
+      b.classList.toggle("cur", cur);
+      if (cur) b.setAttribute("aria-current", "true");
+      else b.removeAttribute("aria-current");
+    });
+  }
+
+  function setLang(lang) {
+    if (lang === "en") document.documentElement.lang = "en";
+    else document.documentElement.lang = lang;
+    document.documentElement.setAttribute("data-lang", lang);
+    applyTextNodes(lang);
+    applyPlaceholders(lang);
+    markCurrentItem(lang);
+    rebuildTocLabels();
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+  }
+
+  /* ---------------- LANGUAGE MENU ---------------- */
+  function toggleLangMenu(force) {
+    var open = force !== undefined ? force : !langMenu.classList.contains("open");
+    langMenu.classList.toggle("open", open);
+  }
+
+  langBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    toggleLangMenu();
+  });
+
+  langMenu.querySelectorAll("button[data-lang]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      setLang(b.getAttribute("data-lang"));
+      toggleLangMenu(false);
+    });
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!langMenu.contains(e.target) && e.target !== langBtn && !langBtn.contains(e.target)) {
+      toggleLangMenu(false);
+    }
+  });
+
+  /* ---------------- SIDEBAR (MOBILE) ---------------- */
+  burgerBtn && burgerBtn.addEventListener("click", function () {
+    sidebar.classList.toggle("open");
+  });
+
+  document.addEventListener("click", function (e) {
+    if (sidebar.classList.contains("open") && !sidebar.contains(e.target) && e.target !== burgerBtn) {
+      sidebar.classList.remove("open");
+    }
+  });
+
+  /* ---------------- SIDEBAR TOP-LEVEL GROUPS ---------------- */
+  var toc = document.getElementById("toc");
+  toc.querySelectorAll("a[data-i18n]").forEach(function (a) {
+    var ref = a.getAttribute("href");
+    var group = toc.querySelector('.toc-group[data-group="' + a.getAttribute("data-i18n").replace(/^nav\./, "") + '"]');
+    if (!ref || a.getAttribute("data-i18n").indexOf("nav.") !== 0) return;
+    var fullKey = a.getAttribute("data-i18n");
+    if (!group) return;
+    a.classList.add("has-group");
+    var arrow = document.createElement("span");
+    arrow.className = "arrow";
+    arrow.innerHTML = "&#9654;";
+    a.appendChild(arrow);
+
+    function toggleGroup(force) {
+      var open = force !== undefined ? force : !group.classList.contains("open");
+      group.classList.toggle("open", open);
+      a.classList.toggle("open", open);
+    }
+    a.addEventListener("click", function (e) {
+      var g = toc.querySelector('.toc-group[data-group="' + fullKey.replace(/^nav\./, "") + '"]');
+      if (g && g.querySelectorAll("a").length) { e.preventDefault(); toggleGroup(); }
+    });
+    group.toggleGroup = toggleGroup;
+  });
+
+  /* ---------------- AUTO TOC: content sub-nav + sidebar groups ---------------- */
+  function subTocLinks(section) {
+    var links = [];
+    section.querySelectorAll("h3.sub-title[id], h4.h3[id], h2[id].sub-title").forEach(function (h) {
+      var id = h.getAttribute("id");
+      var label = h.textContent.replace(/\s+/g, " ").trim();
+      if (id && label) links.push({ id: id, label: label });
+    });
+    return links;
+  }
+
+  function rebuildTocLabels() {
+    document.querySelectorAll(".toc-sub.auto").forEach(function (holder) {
+      var anchor = holder.getAttribute("data-anchor");
+      if (!anchor || holder.getAttribute("data-built")) return;
+      var section = document.getElementById(anchor);
+      if (!section) return;
+      var links = subTocLinks(section);
+      if (!links.length) { holder.style.display = "none"; return; }
+      var wrap = document.createElement("div");
+      wrap.className = "toc-sub-inner";
+      links.forEach(function (ln) {
+        var a = document.createElement("a");
+        a.href = "#" + ln.id;
+        a.textContent = ln.label;
+        a.classList.add("toc-chip");
+        wrap.appendChild(a);
+      });
+      holder.appendChild(wrap);
+      holder.setAttribute("data-built", "1");
+    });
+
+    toc.querySelectorAll(".toc-group").forEach(function (group) {
+      if (group.getAttribute("data-built")) return;
+      var anchorId = group.getAttribute("data-group");
+      var section = document.getElementById(anchorId);
+      if (!section) return;
+      var links = subTocLinks(section);
+      var sub = document.createElement("div");
+      sub.className = "toc-sub";
+      links.forEach(function (ln) {
+        var a = document.createElement("a");
+        a.href = "#" + ln.id;
+        a.textContent = ln.label;
+        sub.appendChild(a);
+      });
+      group.appendChild(sub);
+      group.setAttribute("data-built", "1");
+      if (!links.length) group.style.display = "none";
+    });
+  }
+
+  /* ---------------- SCROLLSPY ---------------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll(".doc-section[id]"));
+  var seen = {};
+
+  window.addEventListener("scroll", function () {
+    var pos = window.scrollY + 90;
+    var current = sections[0] ? sections[0].id : null;
+    sections.forEach(function (s) { if (s.offsetTop <= pos) current = s.id; });
+
+    if (seen.current === current) return;
+    seen.current = current;
+
+    toc.querySelectorAll("a[href^=\"#\"]").forEach(function (a) {
+      var openNow = current && a.getAttribute("href") === "#" + current;
+      a.classList.toggle("active", openNow);
+      if (openNow) {
+        var parentNav = a.closest("nav");
+        var g = toc.querySelector('.toc-group[data-group="' + current + '"]');
+        if (g && typeof g.toggleGroup === "function" && !g.classList.contains("open") && window.innerWidth > 900) {
+          g.toggleGroup(true);
+        }
+      }
+    });
+  }, { passive: true });
+
+  window.addEventListener("scroll", function () {
+    if (searchBox && !searchBox.classList.contains("open")) return;
+    void 0;
+  }, { passive: true });
+
+  /* ---------------- FAQ ACCORDION ---------------- */
+  document.querySelectorAll(".faq-q").forEach(function (q) {
+    q.addEventListener("click", function () {
+      var item = q.closest(".faq-item");
+      if (!item) return;
+      var wasOpen = item.classList.contains("open");
+      item.closest("section").querySelectorAll(".faq-item.open").forEach(function (o) {
+        o.classList.remove("open");
+      });
+      if (!wasOpen) item.classList.add("open");
+    });
+  });
+
+  /* ---------------- SEARCH ---------------- */
+  var searchIndex = [];
+  document.querySelectorAll(".doc-section[id]").forEach(function (section) {
+    var secTitle = section.querySelector(".section-title") ? section.querySelector(".section-title").textContent.replace(/\s+/g, " ").trim() : "";
+    section.querySelectorAll("h3.sub-title, h4.h3, .faq-q, p").forEach(function (el) {
+      var txt = el.textContent.replace(/\s+/g, " ").trim();
+      if (!txt || txt.length < 3) return;
+      var anchorId = el.id || (el.closest(".faq-item") ? el.closest(".faq-item").getAttribute("data-faq") : null);
+      searchIndex.push({ sec: secTitle, label: txt, id: anchorId || section.id });
+    });
+  });
+
+  function renderSearchResults(query) {
+    searchBox.innerHTML = "";
+    if (!query) {
+      searchBox.classList.remove("open");
+      return;
+    }
+    var q = query.toLowerCase();
+    var hits = [];
+    searchIndex.forEach(function (item) {
+      var hay = (item.label + " " + item.sec).toLowerCase();
+      if (hay.indexOf(q) !== -1) hits.push(item);
+    });
+
+    hits = hits.slice(0, 12);
+
+    var head = document.createElement("div");
+    head.className = "head";
+    var headLabel = "Search results";
+    var d = dict(document.documentElement.lang);
+    if (d["ui.searchResHead"]) headLabel = d["ui.searchResHead"];
+    head.textContent = headLabel + " (" + hits.length + ")";
+    searchBox.appendChild(head);
+
+    if (!hits.length) {
+      var empty = document.createElement("div");
+      empty.className = "empty";
+      var emptyLabel = "No results found.";
+      if (d["ui.searchEmpty"]) emptyLabel = d["ui.searchEmpty"];
+      empty.textContent = emptyLabel;
+      searchBox.appendChild(empty);
+    }
+
+    hits.forEach(function (item) {
+      var dv = document.createElement("div");
+      dv.className = "item";
+      var ttl = document.createElement("span");
+      ttl.className = "ttl";
+      ttl.textContent = item.label;
+      var snip = document.createElement("span");
+      snip.className = "snip";
+      snip.textContent = item.sec;
+      dv.appendChild(ttl);
+      dv.appendChild(snip);
+      dv.addEventListener("click", function () {
+        var target = document.getElementById(item.id);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          if (item.id.indexOf("ts") === 0 || item.id.indexOf("f") === 0) {
+            var fq = target.closest(".faq-item");
+            if (fq && !fq.classList.contains("open")) fq.classList.add("open");
+          }
+        }
+        searchBox.classList.remove("open");
+        searchInput.value = "";
+      });
+      searchBox.appendChild(dv);
+    });
+    searchBox.classList.add("open");
+  }
+
+  function search() {
+    var val = searchInput.value.trim();
+    if (!val) { searchBox.classList.remove("open"); return; }
+    renderSearchResults(val);
+  }
+
+  searchInput.addEventListener("input", search);
+  searchInput.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") { searchBox.classList.remove("open"); searchInput.value = ""; }
+  });
+  document.addEventListener("click", function (e) {
+    if (searchBox && !searchBox.contains(e.target) && e.target !== searchInput) {
+      searchBox.classList.remove("open");
+    }
+  });
+
+  /* ---------------- COPY BUTTONS ---------------- */
+  function copyFallback(text, done) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); done(); } catch (err) { done(); }
+    document.body.removeChild(ta);
+  }
+
+  document.querySelectorAll(".codeblock .copy").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var pre = btn.closest(".codeblock").querySelector("pre");
+      if (!pre) return;
+      var text = pre.innerText;
+      var done = function () {
+        var orig = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(function () { btn.textContent = orig; }, 1400);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { copyFallback(text, done); });
+      } else {
+        copyFallback(text, done);
+      }
+    });
+  });
+
+  /* ---------------- FEEDBACK FORM ---------------- */
+  var fbForm = document.getElementById("feedbackForm");
+  if (fbForm) {
+    fbForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var name = (document.getElementById("fbName") || {}).value || "";
+      var email = (document.getElementById("fbEmail") || {}).value || "";
+      var type = (document.getElementById("fbType") || {}).value || "";
+      var msg = (document.getElementById("fbMsg") || {}).value || "";
+      var note = document.getElementById("fbMsgNote");
+
+      if (!email || !msg) {
+        note.textContent = "Please fill in your email and message.";
+        note.style.display = "inline-block";
+        note.style.color = "var(--danger)";
+        note.style.background = "var(--danger-bg)";
+        return;
+      }
+
+      var subject = encodeURIComponent("[SOORA Docs] " + type + " — " + name);
+      var bodyTxt = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\nType: " + type + "\n\n" + msg);
+      var href = "mailto:" + SUPPORT_MAIL + "?subject=" + subject + "&body=" + bodyTxt;
+      window.location.href = href;
+
+      note.textContent = "Thanks! Your email app should open with the message pre-filled. If not, email us at " + SUPPORT_MAIL + ".";
+      note.style.display = "inline-block";
+      note.style.color = "var(--success)";
+      note.style.background = "var(--success-bg)";
+      fbForm.reset();
+    });
+  }
+
+  /* ---------------- YEAR ---------------- */
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+  /* ---------------- INIT ---------------- */
+  var saved = null;
+  try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+  var initial = ({ am: 1, om: 1, ti: 1, so: 1, har: 1 }).hasOwnProperty(saved) ? saved : "en";
+  document.querySelectorAll("[data-i18n-placeholder], [data-i18n-attr-placeholder]").forEach(function (el) {
+    if (!el.getAttribute("data-org-ph")) el.setAttribute("data-org-ph", el.getAttribute("placeholder") || "");
+  });
+  rebuildTocLabels();
+  setLang(initial);
+
+  /* ---------------- HASH NAVIGATION ---------------- */
+  function openFaqForHash() {
+    var h = window.location.hash;
+    if (!h) return;
+    var target = document.getElementById(h.slice(1));
+    if (target && target.classList && target.classList.contains("faq-a")) {
+      var item = target.closest(".faq-item");
+      if (item) item.classList.add("open");
+    }
+  }
+  window.addEventListener("hashchange", openFaqForHash);
+  openFaqForHash();
+})();
+</script>

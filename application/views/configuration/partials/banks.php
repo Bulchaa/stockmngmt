@@ -9,6 +9,7 @@
     <table id="cfg_manageTable" class="table table-bordered table-striped">
       <thead>
         <tr>
+          <th style="display:none;"></th>
           <th>Bank / Provider</th>
           <th>Account Holder</th>
           <th>Account Number</th>
@@ -82,6 +83,7 @@
       </div>
       <form role="form" action="<?php echo base_url('banks/update') ?>" method="post" id="cfg_updateBankForm">
         <div class="modal-body">
+          <input type="hidden" name="id" id="cfg_edit_id">
           <div class="form-group">
             <label>Bank / Provider Name *</label>
             <input type="text" class="form-control" id="cfg_edit_bank_name" name="edit_bank_name" autocomplete="off">

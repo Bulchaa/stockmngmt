@@ -1,0 +1,68 @@
+<body>
+
+<!-- ===================== TOPBAR ===================== -->
+<header class="topbar">
+  <button class="burger" id="burgerBtn" aria-label="Toggle navigation">&#9776;</button>
+  <a class="brand" href="#top" style="color:#fff">
+    <span class="logo">Q</span>
+    <span class="txt" data-i18n="ui.brand">SOORA ERP &mdash; User Guide</span>
+  </a>
+  <div class="spacer"></div>
+  <div class="searchbox">
+    <input type="text" id="searchInput" autocomplete="off"
+           placeholder="Search documentation..." data-i18n-placeholder="ui.searchPh" aria-label="Search">
+    <span class="s-ico">&#128269;</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="lang-switch">
+    <button class="lang-btn" id="langBtn" type="button">&#127760; <span data-i18n="ui.language">Language</span></button>
+    <div class="lang-menu" id="langMenu">
+      <button type="button" data-lang="en">English <span class="code">EN</span></button>
+      <button type="button" data-lang="am">&#1240;ማርኛ <span class="code">AM</span></button>
+      <button type="button" data-lang="om">Afaan Oromoo <span class="code">OM</span></button>
+      <button type="button" data-lang="ti">&#4653;ግርኛ <span class="code">TI</span></button>
+      <button type="button" data-lang="so">Soomaali <span class="code">SO</span></button>
+      <button type="button" data-lang="har">&#4648;ረሪ <span class="code">HAR</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== SEARCH RESULTS ===================== -->
+<div class="search-results" id="searchResults">
+  <div class="head" data-i18n="ui.searchResHead">Search results</div>
+</div>
+
+<!-- ===================== SIDEBAR TOC ===================== -->
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <nav class="toc" id="toc">
+    <div class="toc-title" data-i18n="toc.guide">Guide Contents</div>
+    <a href="#top" data-i18n="nav.home">Home / Overview</a>
+    <a href="#getting-started" data-i18n="nav.gettingStarted">Getting Started</a>
+    <div class="toc-group" data-group="getting-started"></div>
+    <a href="#dashboard" data-i18n="nav.dashboard">Dashboard</a>
+    <a href="#users" data-i18n="nav.users">User Management</a>
+    <div class="toc-group" data-group="users"></div>
+    <a href="#groups" data-i18n="nav.groups">Roles &amp; Permissions</a>
+    <a href="#products" data-i18n="nav.products">Product Catalog</a>
+    <div class="toc-group" data-group="products"></div>
+    <a href="#orders" data-i18n="nav.orders">Orders &amp; Sales</a>
+    <div class="toc-group" data-group="orders"></div>
+    <a href="#customers" data-i18n="nav.customers">Customers</a>
+    <a href="#payment-accounts" data-i18n="nav.paymentAccounts">Payment Accounts</a>
+    <a href="#sms" data-i18n="nav.sms">SMS Notifications</a>
+    <a href="#telebirr" data-i18n="nav.telebirr">Telebirr Verification</a>
+    <a href="#reports" data-i18n="nav.reports">Reports &amp; Analytics</a>
+    <a href="#configuration" data-i18n="nav.config">Company &amp; Configuration</a>
+    <a href="#faq" data-i18n="nav.faq">FAQ</a>
+    <div class="toc-group" data-group="faq"></div>
+    <a href="#troubleshooting" data-i18n="nav.troubleshooting">Troubleshooting</a>
+    <div class="toc-group" data-group="troubleshooting"></div>
+    <a href="#changelog" data-i18n="nav.changelog">Updates &amp; Changelog</a>
+    <div class="toc-group" data-group="changelog"></div>
+    <a href="#privacy" data-i18n="nav.privacy">Privacy Policy</a>
+    <a href="#terms" data-i18n="nav.terms">Terms of Service</a>
+    <a href="#contact" data-i18n="nav.contact">Contact &amp; Support</a>
+    <a href="#feedback" data-i18n="nav.feedback">Feedback</a>
+  </nav>
+</aside>

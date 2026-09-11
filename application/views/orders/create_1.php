@@ -187,20 +187,22 @@
                   </div>
 
                   <div class="form-group" id="bank_accounts_group" style="display:none;">
-                    <label class="col-sm-5 control-label">Bank Account</label>
+                    <label class="col-sm-5 control-label">Select Bank Account</label>
                     <div class="col-sm-7">
-                      <?php if(isset($bank_accounts) && count($bank_accounts) > 0): ?>
-                        <?php foreach($bank_accounts as $bank): ?>
-                          <div style="border:1px solid #ddd; padding:8px; margin-bottom:8px; border-radius:4px; background:#f9f9f9;">
-                            <strong><?php echo $bank['bank_name']; ?></strong>
-                            <?php if($bank['is_default'] == 1): ?> <span class="label label-info">Default</span><?php endif; ?>
-                            <br />
-                            Account Name: <?php echo $bank['account_name']; ?><br />
-                            Account No: <strong><?php echo $bank['account_number']; ?></strong>
-                          </div>
-                        <?php endforeach; ?>
-                      <?php else: ?>
-                        <p class="text-warning">No bank accounts configured. Please add them under Payment Accounts.</p>
+                      <select class="form-control" name="paid_bank" id="paid_bank">
+                        <option value="">-- Select Bank / Account --</option>
+                        <?php if(isset($bank_accounts) && count($bank_accounts) > 0): ?>
+                          <?php foreach($bank_accounts as $bank): ?>
+                            <option value="<?php echo $bank['id']; ?>" <?php if($bank['is_default'] == 1) echo 'selected'; ?>>
+                              <?php echo $bank['bank_name']; ?> - <?php echo $bank['account_name']; ?> (<?php echo $bank['account_number']; ?>)
+                            </option>
+                          <?php endforeach; ?>
+                        <?php else: ?>
+                          <option value="">No bank accounts configured</option>
+                        <?php endif; ?>
+                      </select>
+                      <?php if(isset($bank_accounts) && count($bank_accounts) == 0): ?>
+                        <p class="text-warning">Please add bank accounts under Payment Accounts first.</p>
                       <?php endif; ?>
                     </div>
                   </div>

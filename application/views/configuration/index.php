@@ -88,28 +88,38 @@
     });
   });
 
-  var cfg_manageTable = $('#cfg_manageTable').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: {
-      url: '<?php echo base_url("banks/fetchBankData") ?>',
-      type: 'POST'
-    },
-    columns: [
-      { data: 0, visible: false },
-      { data: 1 },
-      { data: 2 },
-      { data: 3 },
-      { data: 4 },
-      { data: 5 },
-      { data: 6,
-        render: function(d, type, row){
-          var id = row[0];
-          return '<button type="button" class="btn btn-warning btn-sm cfg_edit_bank" data-id="'+id+'"><i class="fa fa-pencil"></i></button> '
-               + '<button type="button" class="btn btn-danger btn-sm cfg_remove_bank" data-id="'+id+'"><i class="fa fa-trash"></i></button>';
+  var cfg_manageTable = null;
+  try {
+    cfg_manageTable = $('#cfg_manageTable').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: '<?php echo base_url("banks/fetchBankData") ?>',
+        type: 'POST'
+      },
+      columns: [
+        { data: 0, visible: false },
+        { data: 1 },
+        { data: 2 },
+        { data: 3 },
+        { data: 4 },
+        { data: 5 },
+        { data: 6,
+          render: function(d, type, row){
+            var id = row[0];
+            return '<button type="button" class="btn btn-warning btn-sm cfg_edit_bank" data-id="'+id+'"><i class="fa fa-pencil"></i></button> '
+                 + '<button type="button" class="btn btn-danger btn-sm cfg_remove_bank" data-id="'+id+'"><i class="fa fa-trash"></i></button>';
+          }
         }
-      }
-    ]
+      ]
+    });
+  } catch(e) {
+    console.error('cfg_manageTable init error:', e);
+  }
+
+  // the table is initialized inside a hidden tab, so re-measure when the tab opens
+  $('a[data-toggle="tab"][href="#tab-banks"]').on('shown.bs.tab', function(){
+    if(cfg_manageTable) { cfg_manageTable.columns.adjust(); }
   });
 
   $(document).on('click', '.cfg_edit_bank', function(){
@@ -120,6 +130,7 @@
       data: {id: id},
       dataType: 'json',
       success: function(d){
+        $('#cfg_edit_id').val(id);
         $('#cfg_edit_bank_name').val(d.bank_name);
         $('#cfg_edit_account_name').val(d.account_name);
         $('#cfg_edit_account_number').val(d.account_number);
@@ -152,7 +163,7 @@
           $('#cfg_bank_messages').html('<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-check"></i> '+resp.messages+'</div>');
           form.trigger('reset');
           $('#cfg_addBankModal').modal('hide');
-          cfg_manageTable.ajax.reload();
+          if(cfg_manageTable) { cfg_manageTable.ajax.reload(); }
         } else {
           $('#cfg_bank_messages').html('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-times"></i> '+resp.messages+'</div>');
         }
@@ -173,7 +184,7 @@
         if(resp.success){
           $('#cfg_bank_messages').html('<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-check"></i> '+resp.messages+'</div>');
           $('#cfg_editBankModal').modal('hide');
-          cfg_manageTable.ajax.reload();
+          if(cfg_manageTable) { cfg_manageTable.ajax.reload(); }
         } else {
           $('#cfg_bank_messages').html('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-times"></i> '+resp.messages+'</div>');
         }
@@ -194,7 +205,7 @@
         if(resp.success){
           $('#cfg_bank_messages').html('<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-check"></i> '+resp.messages+'</div>');
           $('#cfg_removeBankModal').modal('hide');
-          cfg_manageTable.ajax.reload();
+          if(cfg_manageTable) { cfg_manageTable.ajax.reload(); }
         } else {
           $('#cfg_bank_messages').html('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><i class="fa fa-times"></i> '+resp.messages+'</div>');
         }

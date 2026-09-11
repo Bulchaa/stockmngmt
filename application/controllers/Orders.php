@@ -317,8 +317,17 @@ public function in()
                         $process = $this->model_orders->getProcessorders($value['id']);
 			$count_total_item = $this->model_orders->countOrderItem($value['id']);
                        // $orders_items = $this->model_orders->getOrdersItemData($value['id']);
-                       $date2 = date('d-m-Y', $process['processed_date']);
-			$time2 = date('h:i a', $process['processed_date']);
+
+                        $processed_date = '';
+                       if($process && isset($process['processed_date']) && $process['processed_date'] != 0) {
+                           $processed_date = $process['processed_date'];
+                       }
+                       if(!$processed_date) {
+                           $processed_date = $value['date_time'];
+                       }
+
+                       $date2 = ($processed_date) ? date('d-m-Y', $processed_date) : '';
+			$time2 = ($processed_date) ? date('h:i a', $processed_date) : '';
 
 			$date_time2 = $date2 . ' ' . $time2;
                         
@@ -350,12 +359,24 @@ public function in()
                         if($value['process_status'] == 0) {
 				$process_status = '<span class="label label-danger">Not Processed</span>';	
 			}
+
+                        // clickable quick-status buttons
+                        $process_btn = '';
+                        if(in_array('updateOrder', $this->permission)) {
+                            if($value['process_status'] == 0) {
+                                $process_btn = ' <button type="button" class="btn btn-warning btn-xs btn-process-status" data-id="'.$value['id'].'" data-status="1">Under Process</button>';
+                            }
+                            else if($value['process_status'] == 1) {
+                                $process_btn = ' <button type="button" class="btn btn-success btn-xs btn-process-status" data-id="'.$value['id'].'" data-status="2">Mark Processed</button>';
+                            }
+                        }
+			$process_status = $process_status . $process_btn;
                         
                         
                            if($value['customer_types'] == 2) {
 				$customer = '<span class="label label-danger">የድርጀት ድንብኘ</span>';
                            $Customer_name55 = $this->model_customers->getCustomerData($value['customer_name']);
-                        $Customer_name =  $Customer_name55['username'].'/'.$Customer_name55['oname'];
+                        $Customer_name =  ($Customer_name55 && isset($Customer_name55['username'])) ? $Customer_name55['username'].'/'.$Customer_name55['oname'] : $value['customer_name'];
 			}
 			else 
                         if($value['customer_types'] == 0) {
@@ -590,6 +611,40 @@ $this->data['payment'] = $this->model_orders->getPaymentData();
 
             $this->render_template('orders/process_edit', $this->data);
         }
+	}
+	/*
+	* Updates the process status of an order via AJAX (used by the quick buttons
+	* on the process list page and the process_update page).
+	*/
+	public function updateProcessStatusAjax()
+	{
+		if(!in_array('updateOrder', $this->permission)) {
+			echo json_encode(array('success' => false, 'messages' => 'Permission denied'));
+			return;
+		}
+
+		$order_id = $this->input->post('order_id');
+		$status = $this->input->post('status');
+
+		if(!$order_id || !in_array($status, array('0', '1', '2'))) {
+			echo json_encode(array('success' => false, 'messages' => 'Invalid arguments'));
+			return;
+		}
+
+		if($this->model_orders->updateProcessStatus($order_id, $status)) {
+			$order_row = $this->model_orders->getOrdersDataProcess($order_id);
+			if($order_row && $status != '0') {
+				$phone = $this->getOrderCustomerPhone($order_row);
+				$status_text = ($status == '2') ? 'Delivered' : 'Under Process';
+				$message = 'Yeroo: Order #'.$order_row['bill_no'].' status updated to '.$status_text.'. Thank you!';
+				$this->sendOrderSms($order_id, $order_row['bill_no'], $phone, $message, 'status_change');
+			}
+
+			echo json_encode(array('success' => true, 'messages' => 'Successfully updated'));
+		}
+		else {
+			echo json_encode(array('success' => false, 'messages' => 'Error occurred'));
+		}
 	}
 	/*
 	* If the validation is not valid, then it redirects to the edit orders page 

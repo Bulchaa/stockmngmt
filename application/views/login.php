@@ -322,15 +322,24 @@
                 </form>
             </div>
 
-            <!-- Back to website -->
-            <p class="mt-7 text-center text-slate-500">
+            <!-- Back to website + Documentation -->
+            <div class="mt-7 flex items-center justify-center gap-6">
                 <a href="<?php echo base_url(); ?>" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-pink-400 transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                     </svg>
                     Back to website
                 </a>
-            </p>
+
+                <span class="text-slate-700 select-none">|</span>
+
+                <a href="<?php echo base_url('documentation/index.html'); ?>" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 hover:text-pink-400 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 016.5 22H20V2H6.5A2.5 2.5 0 004 4.5v15z"/>
+                    </svg>
+                    Documentation
+                </a>
+            </div>
         </div>
     </div>
 

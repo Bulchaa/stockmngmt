@@ -1,0 +1,271 @@
+<main class="content">
+<div class="content-inner" id="top">
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <h1 data-i18n="hs.title">SOORA ERP User Documentation</h1>
+  <p data-i18n="hs.subtitle">Complete guide to managing your business with the SOORA ERP system &mdash; users, permissions, products, orders, payments, SMS, Telebirr, reports and more.</p>
+  <div class="badges">
+    <span class="badge" data-i18n="hs.ver">Version 1.0</span>
+    <span class="badge" data-i18n="hs.lang">6 Languages</span>
+    <span class="badge">CodeIgniter 3 + MySQL</span>
+    <span class="badge" data-i18n="hs.responsive">Responsive</span>
+  </div>
+</section>
+
+<section class="doc-section" id="getting-started">
+  <h2 class="section-title"><span class="num">1</span> <span data-i18n="sec.gettingStarted">Getting Started</span></h2>
+
+  <div class="toc-sub auto" data-anchor="getting-started"></div>
+
+  <h3 class="sub-title" id="gs-intro" data-i18n="sub.gsIntro">What is SOORA ERP?</h3>
+  <p>SOORA ERP is a web-based business management system built for retail and service businesses in Ethiopia. It helps you run your whole operation in one place: manage your team and their permissions, build a product catalog, record sales orders, accept cash and Telebirr payments, send SMS receipts to customers, and track your income with reports.</p>
+  <p>The system is designed to be simple enough for everyday staff while giving owners full control with powerful reports and configurable settings.</p>
+
+  <div class="grid cols-3">
+    <div class="card"><div class="ico">&#128105;&#8205;&#128187;</div><h4 data-i18n="hs.cardUsers">User Management</h4><p data-i18n="hs.cardUsersP">Create accounts and control what each staff member can do.</p></div>
+    <div class="card"><div class="ico">&#128230;</div><h4 data-i18n="hs.cardProducts">Product Catalog</h4><p data-i18n="hs.cardProductsP">Products, brands, categories, stores and attributes.</p></div>
+    <div class="card"><div class="ico">&#128202;</div><h4 data-i18n="hs.cardOrders">Orders &amp; Payments</h4><p data-i18n="hs.cardOrdersP">Private and organization orders with cash, transfer and Telebirr.</p></div>
+    <div class="card"><div class="ico">&#128241;</div><h4 data-i18n="hs.cardSms">SMS Notifications</h4><p data-i18n="hs.cardSmsP">Automatic SMS to customers about orders and payments.</p></div>
+    <div class="card"><div class="ico">&#128200;</div><h4 data-i18n="hs.cardReports">Reports &amp; Analytics</h4><p data-i18n="hs.cardReportsP">Charts and detailed income reports by date.</p></div>
+    <div class="card"><div class="ico">&#9881;&#65039;</div><h4 data-i18n="hs.cardConfig">Company Settings</h4><p data-i18n="hs.cardConfigP">Your brand, VAT, service charge, printer and SMS settings.</p></div>
+  </div>
+
+  <h3 class="sub-title" id="gs-who" data-i18n="who.title">Who is this system for?</h3>
+  <p data-i18n="who.intro">SOORA ERP is built for any business that records orders every day and needs to know exactly where its money is &mdash; from one counter to many stores. It is especially made for businesses that use orders and order processing from start to finish.</p>
+
+  <div class="grid cols-3">
+    <div class="card"><div class="ico">&#127978;</div><h4 data-i18n="who.shopsT">Shops</h4><p data-i18n="who.shopsP">Supermarkets, mini-marts, stationery, clothing and everyday shops that sell and record orders daily.</p></div>
+    <div class="card"><div class="ico">&#128230;</div><h4 data-i18n="who.warehouseT">Warehouses</h4><p data-i18n="who.warehouseP">Businesses that move stock in and out &mdash; stock counts, quantities, and knowing what is running low.</p></div>
+    <div class="card"><div class="ico">&#128424;&#65039;</div><h4 data-i18n="who.printingT">Printing Houses</h4><p data-i18n="who.printingP">Printing and design studios that take orders for measured materials and track every print job.</p></div>
+    <div class="card"><div class="ico">&#128247;</div><h4 data-i18n="who.photoT">Photography Studios</h4><p data-i18n="who.photoP">Photography and photo studios that book sessions, sell prints, and follow up with their customers.</p></div>
+    <div class="card"><div class="ico">&#129534;</div><h4 data-i18n="who.ordersT">Businesses that Use Orders</h4><p data-i18n="who.ordersP">Any business that takes an order, sells on credit, prints a receipt, or checks on what customers still owe.</p></div>
+  </div>
+
+  <div class="alert alert-info"><span class="a-ttl" data-i18n="who.focusT">Especially for you:</span> <span data-i18n="who.focus">If your day is full of orders &mdash; from cash at the counter to Telebirr payments, from one bill to dozens &mdash; SOORA ERP is built around your way of working.</span></div>
+
+  <h3 class="sub-title" id="gs-req" data-i18n="sub.reqs">System Requirements</h3>
+  <div class="table-wrap">
+  <table class="doc-table">
+    <thead><tr><th data-i18n="tbl.requirement">Requirement</th><th data-i18n="tbl.detail">Detail</th></tr></thead>
+    <tbody>
+      <tr><td>PHP</td><td>Version 5.6 or newer (works from 5.3.7, but newer is recommended for security).</td></tr>
+      <tr><td>Web Server</td><td>Apache (via WAMP, XAMPP, LAMP or MAMP).</td></tr>
+      <tr><td>Database</td><td>MySQL / MariaDB. Database name: <code>stock</code></td></tr>
+      <tr><td>Browsers</td><td>Chrome, Firefox, Edge or Safari (recent versions).</td></tr>
+      <tr><td>Internet</td><td>Required for SMS (GeeSMS API) and Telebirr payment verification.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="sub-title" id="gs-install" data-i18n="sub.install">Installation Guide</h3>
+  <div class="alert alert-info"><span class="a-ttl">Tip:</span> This section is for the person who sets up the system (site owner or administrator). If you only <em>use</em> the system, just go to <a href="#gs-login">Logging In</a> below.</div>
+  <ol class="steps">
+    <li><b data-i18n="st.install1t">Download the files.</b> <span data-i18n="st.install1p">Copy the project folder into your web server's root directory. For XAMPP this is usually <code>C:\xampp\htdocs\ERP_qubeteck\</code>.</span></li>
+    <li><b data-i18n="st.install2t">Create the database.</b> <span data-i18n="st.install2p">Open phpMyAdmin and create a new database named <code>stock</code>.</span></li>
+    <li><b data-i18n="st.install3t">Import the schema.</b> <span data-i18n="st.install3p">Import the <code>stock.sql</code> file into your <code>stock</code> database.</span></li>
+    <li><b data-i18n="st.install4t">Run the servers.</b> <span data-i18n="st.install4p">Start Apache and MySQL from your server control panel (WAMP / XAMPP).</span></li>
+    <li><b data-i18n="st.install5t">Open the system.</b> <span data-i18n="st.install5p">Visit <code>http://localhost/ERP_qubeteck/</code> in your browser.</span></li>
+  </ol>
+
+  <figure class="shot">
+    <img src="assets/screenshots/database.PNG" alt="Database import in phpMyAdmin" loading="lazy">
+    <figcaption data-i18n="cap.database">Importing the stock.sql schema into the &quot;stock&quot; database in phpMyAdmin.</figcaption>
+  </figure>
+
+  <h4 class="h3" data-i18n="sub.configDb">Configure the database connection (if needed)</h4>
+  <p>If your database user or password is different (for example a production server), edit <code>application/config/database.php</code>:</p>
+  <div class="codeblock"><div class="cb-head"><span>database.php</span><button class="copy" data-i18n="ui.copy">Copy</button></div><pre><code>$db['default'] = array(
+    'hostname' =&gt; 'localhost',
+    'username' =&gt; 'root',
+    'password' =&gt; '',
+    'database' =&gt; 'stock',
+    'dbdriver' =&gt; 'mysqli'
+    // ...
+);</code></pre></div>
+
+  <div class="alert alert-danger"><span class="a-ttl">Important:</span> Never run the system on a default password on the internet. Change the database and admin passwords before going live.</div>
+
+  <h3 class="sub-title" id="gs-login" data-i18n="sub.login">Logging In</h3>
+  <ol class="steps">
+    <li><b data-i18n="st.login1t">Open the system URL</b> <span data-i18n="st.login1p">in your browser (for example <code>http://localhost/ERP_qubeteck/</code>).</span></li>
+    <li><b data-i18n="st.login2t">Enter your email and password</b> <span data-i18n="st.login2p">on the login page.</span></li>
+    <li><b data-i18n="st.login3t">Click <em>Login</em>.</b> <span data-i18n="st.login3p">You will be taken to the dashboard. If you were already logged in, the system opens the dashboard directly.</span></li>
+  </ol>
+  <div class="alert alert-warn"><span class="a-ttl">Default login</span> (for first use &mdash; change it immediately):<br><strong>Email:</strong> admin@admin.com<br><strong>Password:</strong> password</div>
+
+  <figure class="shot">
+    <img src="assets/screenshots/login.PNG" alt="Login page" loading="lazy">
+    <figcaption data-i18n="cap.login">The SOORA ERP login page.</figcaption>
+  </figure>
+
+  <div class="codeblock"><div class="cb-head"><span>Sample login URL check</span><button class="copy" data-i18n="ui.copy">Copy</button></div><pre><code># If the site is inside a folder, the URL is:
+http://localhost/ERP_qubeteck/auth/login
+# Logout:
+http://localhost/ERP_qubeteck/auth/logout</code></pre></div>
+</section>
+
+<!-- ===================== DASHBOARD ===================== -->
+<section class="doc-section" id="dashboard">
+  <h2 class="section-title"><span class="num">2</span> <span data-i18n="sec.dashboard">Dashboard</span></h2>
+  <div class="toc-sub auto" data-anchor="dashboard"></div>
+
+  <p class="lead">The dashboard is the first screen you see after logging in. It gives an at-a-glance summary of the whole business.</p>
+
+  <h3 class="sub-title" id="dash-widgets" data-i18n="sub.dashWidgets">Dashboard widgets</h3>
+  <div class="table-wrap">
+  <table class="doc-table">
+    <thead><tr><th>Widget</th><th data-i18n="tbl.description">Description</th></tr></thead>
+    <tbody>
+      <tr><td>Total Products</td><td data-i18n="tbl.dashProducts">Number of products in the catalog (active and inactive).</td></tr>
+      <tr><td>Total Paid Orders</td><td data-i18n="tbl.dashPaid">Orders fully paid by customers.</td></tr>
+      <tr><td>Total Orders</td><td data-i18n="tbl.dashOrders">All private/individual orders recorded.</td></tr>
+      <tr><td>Total Organization Orders</td><td data-i18n="tbl.dashOrgOrders">All organization (company) orders recorded.</td></tr>
+      <tr><td>Total Loan / Unpaid</td><td data-i18n="tbl.dashLoan">Orders still to be paid (credit / arrears).</td></tr>
+      <tr><td>Total Processed / Delivered</td><td data-i18n="tbl.dashProcessed">Orders that are under process or delivered.</td></tr>
+      <tr><td>Total Users</td><td data-i18n="tbl.dashUsers">Number of staff accounts.</td></tr>
+      <tr><td>Total Active Stores</td><td data-i18n="tbl.dashStores">Number of stores (locations) that are active.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <figure class="shot">
+    <img src="assets/screenshots/dashboard.PNG" alt="ERP dashboard" loading="lazy">
+    <figcaption data-i18n="cap.dashboard">The dashboard summary screen with business widgets.</figcaption>
+  </figure>
+
+  <div class="alert alert-info"><span class="a-ttl" data-i18n="al.seeAlso">See also:</span> <a href="#reports" data-i18n="al.seeAlsoReports">Reports &amp; Analytics</a> — the dashboard's &quot;processed/delivered&quot; numbers come from the <a href="#orders-process" data-i18n="al.orderProcess">order process workflow</a>.</div>
+</section>
+
+<!-- ===================== USERS ===================== -->
+<section class="doc-section" id="users">
+  <h2 class="section-title"><span class="num">3</span> <span data-i18n="sec.users">User Management</span></h2>
+  <div class="toc-sub auto" data-anchor="users"></div>
+
+  <p class="lead">Users are the people who log into the system (owners, cashiers, managers). Each user belongs to one <a href="#groups">group</a> which decides what they can see and do.</p>
+
+  <h3 class="sub-title" id="users-list" data-i18n="sub.userList">Viewing users</h3>
+  <p data-i18n="p.userList">Go to <strong>Users &rarr; Manage Users</strong>. The list shows users in a searchable table with columns for name, phone, gender and actions. The main administrator account (id 1) is never shown in the list and cannot be removed.</p>
+
+  <h3 class="sub-title" id="users-create" data-i18n="sub.userCreate">Adding a new user</h3>
+  <ol class="steps">
+    <li><b data-i18n="st.u1">Go to Users &rarr; Add User.</b></li>
+    <li><b data-i18n="st.u2">Fill the form:</b>
+      <ul>
+        <li data-i18n="st.u2a"><strong>Username</strong> — a short unique name used to identify the user.</li>
+        <li data-i18n="st.u2b"><strong>Password</strong> — stored securely (hashed, never readable in the database).</li>
+        <li data-i18n="st.u2c"><strong>Email</strong> — used to log in.</li>
+        <li data-i18n="st.u2d"><strong>First name / Last name</strong> — the staff member's name.</li>
+        <li data-i18n="st.u2e"><strong>Phone</strong> — contact number (also used if SMS is enabled).</li>
+        <li data-i18n="st.u2f"><strong>Gender</strong> — Male / Female.</li>
+        <li data-i18n="st.u2g"><strong>Group</strong> — choose the permission group for this user.</li>
+      </ul>
+    </li>
+    <li><b data-i18n="st.u3">Click <em>Create</em>.</b> <span data-i18n="st.u3p">The password is hashed before saving. You will be returned to the user list.</span></li>
+  </ol>
+
+  <h3 class="sub-title" id="users-edit" data-i18n="sub.userEdit">Editing / deleting a user</h3>
+  <ul>
+    <li data-i18n="p.userEdit1"><strong>Edit:</strong> click the <em>Edit</em> icon next to a user, change the details and save. You can also set a new password here — the confirmation field must match.</li>
+    <li data-i18n="p.userEdit2"><strong>Delete:</strong> click the <em>Delete</em> icon. Only users with the &quot;delete user&quot; permission can do this.</li>
+  </ul>
+
+  <h3 class="sub-title" id="users-self" data-i18n="sub.userSelf">Profile &amp; Settings (your own account)</h3>
+  <ul>
+    <li data-i18n="p.userSelf1"><strong>Profile</strong> — shows the details of the currently logged-in user. Always available to the logged-in user.</li>
+    <li data-i18n="p.userSelf2"><strong>Settings</strong> — lets a user update their own information and change their own password (enter your current password logic: new password + confirmation must match).</li>
+  </ul>
+
+  <div class="alert alert-warn"><span class="a-ttl" data-i18n="al.warn">Warning:</span> <span data-i18n="p.userWarn">Do not delete or disable the only user with administration rights — you could lock yourself out of the system.</span></div>
+</section>
+
+<!-- ===================== GROUPS ===================== -->
+<section class="doc-section" id="groups">
+  <h2 class="section-title"><span class="num">4</span> <span data-i18n="sec.groups">Roles &amp; Permissions (Groups)</span></h2>
+  <div class="toc-sub auto" data-anchor="groups"></div>
+
+  <p class="lead">A <strong>group</strong> is a set of permissions. Instead of giving permissions to each person, you create groups (for example <em>Cashier</em>, <em>Manager</em>, <em>Owner</em>) and assign users to them.</p>
+
+  <h3 class="sub-title" id="groups-perms" data-i18n="sub.permList">The 36 permissions</h3>
+  <p data-i18n="p.permList">Every module has four standard permissions (create, view, update, delete) plus a few special ones. Examples:</p>
+  <div class="table-wrap">
+  <table class="doc-table">
+    <thead><tr><th data-i18n="tbl.permName">Permission</th><th data-i18n="tbl.allows">What the user can do</th></tr></thead>
+    <tbody>
+      <tr><td>createProduct / viewProduct / updateProduct / deleteProduct</td><td data-i18n="tbl.permProduct">Work with the product catalog.</td></tr>
+      <tr><td>createOrder / viewOrder / updateOrder / deleteOrder</td><td data-i18n="tbl.permOrder">Work with orders and payments.</td></tr>
+      <tr><td>createUser / viewUser / updateUser / deleteUser</td><td data-i18n="tbl.permUser">Manage staff accounts.</td></tr>
+      <tr><td>viewReports</td><td data-i18n="tbl.permReports">See sales charts and detailed income reports.</td></tr>
+      <tr><td>updateCompany / updateSetting</td><td data-i18n="tbl.permCompany">Change company settings and system configuration.</td></tr>
+      <tr><td>createCustomer / viewCustomer / updateCustomer / deleteCustomer</td><td data-i18n="tbl.permCustomer">Manage organization customers.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p data-i18n="p.permNote">Permissions are checked on every action by the system. Even if a user navigates directly to a URL, they only succeed if their group has the permission.</p>
+
+  <h3 class="sub-title" id="groups-manage" data-i18n="sub.groupManage">Creating and managing groups</h3>
+  <ol class="steps">
+    <li><b data-i18n="st.g1">Go to Groups &rarr; Add Group.</b> <span data-i18n="st.g1p">Enter a group name.</span></li>
+    <li><b data-i18n="st.g2">Tick the permissions</b> <span data-i18n="st.g2p">you want this group to have. The list is grouped by module for easy selection.</span></li>
+    <li><b data-i18n="st.g3">Save.</b> <span data-i18n="st.g3p">The group appears in the group list and can be assigned to users.</span></li>
+  </ol>
+  <p data-i18n="p.groupEdit">You can edit a group's permissions at any time — the change applies to every user in that group immediately.</p>
+
+  <div class="alert alert-danger"><span class="a-ttl">Cannot delete?</span> <span data-i18n="p.groupDel">A group that is assigned to at least one user cannot be deleted. Reassign or remove the users first.</span></div>
+
+  <div class="alert alert-info"><span class="a-ttl" data-i18n="al.preset">Pre-configured groups:</span> <span data-i18n="p.groupPre">Two full-access groups are created for you: <strong>Administrator</strong> and <strong>Owners</strong> — both have all 36 permissions.</span></div>
+</section>
+
+<!-- ===================== PRODUCT CATALOG ===================== -->
+<section class="doc-section" id="products">
+  <h2 class="section-title"><span class="num">5</span> <span data-i18n="sec.products">Product Catalog</span></h2>
+  <div class="toc-sub auto" data-anchor="products"></div>
+
+  <p class="lead">The catalog holds everything you sell. It is organised with <strong>products</strong> plus supporting lists: brands, categories, stores and attributes. Products use these lists to describe themselves (a product belongs to a store, can have one or more brands / categories / attributes, and carries its own price and stock quantity).</p>
+
+  <h3 class="sub-title" id="prod-brands" data-i18n="sub.brands">Brands</h3>
+  <p data-i18n="p.brands">Brands are the makers of your products (for example &quot;Habesha&quot;, &quot;Rico&quot;, &quot;Samsung&quot;). You can mark a brand active or inactive. Use <strong>Brands</strong> in the menu to add, edit or delete, and to set whether the brand is active.</p>
+
+  <h3 class="sub-title" id="prod-categories" data-i18n="sub.categories">Categories</h3>
+  <p data-i18n="p.categories">Categories group your products into types (for example &quot;Printing&quot;, &quot;Stationery&quot;, &quot;Clothing&quot;). Manage them under <strong>Category</strong>. You can activate or deactivate a category, and products keep their category even if a list item is later made inactive.</p>
+
+  <h3 class="sub-title" id="prod-attributes" data-i18n="sub.attributes">Attributes</h3>
+  <p data-i18n="p.attributes">Attributes describe product options in two levels: an <strong>attribute</strong> (for example &quot;Color&quot; or &quot;Size&quot;) and its <strong>values</strong> (for example Blue, Red / S, M, L). Create an attribute, then open it and click <em>Add Value</em> to add its values. Attribute values are stored with the product record (as JSON) so a product can carry several.</p>
+
+  <h3 class="sub-title" id="prod-stores" data-i18n="sub.stores">Stores</h3>
+  <p data-i18n="p.stores">Stores are your locations or warehouses (for example &quot;Chiro Main Shop&quot;, &quot;Store 2&quot;). Each product is assigned to a store. The dashboard shows the total number of <em>active</em> stores.</p>
+
+  <h3 class="sub-title" id="prod-fields" data-i18n="sub.productField">Products — field by field</h3>
+  <div class="table-wrap">
+  <table class="doc-table">
+    <thead><tr><th>Field</th><th data-i18n="tbl.description">Description</th></tr></thead>
+    <tbody>
+      <tr><td>Name</td><td data-i18n="tbl.pName">The product name shown to customers.</td></tr>
+      <tr><td>SKU</td><td data-i18n="tbl.pSku">Stock Keeping Unit — a unique code for the product.</td></tr>
+      <tr><td>Price</td><td data-i18n="tbl.pPrice">Selling price in the selected currency.</td></tr>
+      <tr><td>Quantity</td><td data-i18n="tbl.pQty">Current stock level. Automatically decreased when an order is placed.</td></tr>
+      <tr><td>Image</td><td data-i18n="tbl.pImage">Product image (GIF / JPG / PNG, max 1 MB).</td></tr>
+      <tr><td>Description</td><td data-i18n="tbl.pDesc">A short description of the product.</td></tr>
+      <tr><td>Brand / Category / Store</td><td data-i18n="tbl.pAssign">Which brand(s), category(ies) and store this product belongs to. Multiple brand / category assignments are supported via JSON.</td></tr>
+      <tr><td>Attribute Value</td><td data-i18n="tbl.pAttr">Optional attribute values selected for this product.</td></tr>
+      <tr><td>Availability</td><td data-i18n="tbl.pAvail">Active (available to sell) or Inactive.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="alert alert-warn"><span class="a-ttl" data-i18n="al.lowStock">Stock levels:</span> <span data-i18n="p.lowStock">Quantity &le; 10 is shown as a <em>Low Stock</em> warning. Quantity &le; 0 is shown as <em>Out of Stock</em>.</span></div>
+
+  <h3 class="sub-title" id="prod-create" data-i18n="sub.productCreate">Adding and managing products</h3>
+  <ol class="steps">
+    <li><b data-i18n="st.p1">Go to Products &rarr; Add Product.</b></li>
+    <li><b data-i18n="st.p2">Enter the product details</b> <span data-i18n="st.p2p">(name, SKU, price, quantity, image, description).</span></li>
+    <li><b data-i18n="st.p3">Assign brand(s), category(ies), attribute value(s) and a store.</b></li>
+    <li><b data-i18n="st.p4">Set availability</b> <span data-i18n="st.p4p">and click <em>Create</em>.</span></li>
+  </ol>
+  <p data-i18n="p.prodManage">Use <strong>Products &rarr; Manage Products</strong> to view the catalog. The list shows a thumbnail, SKU, name, price, quantity status (with low-stock colouring), store and availability. You can edit or delete products from here.</p>
+
+  <div class="codeblock"><div class="cb-head"><span>JSON attribute storage example (product record)</span><button class="copy" data-i18n="ui.copy">Copy</button></div><pre><code>{
+  "color": ["Blue", "Red"],
+  "size": ["M", "L"]
+}</code></pre></div>
+</section>

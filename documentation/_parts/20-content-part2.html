@@ -1,0 +1,293 @@
+<!-- ===================== ORDERS ===================== -->
+<section class="doc-section" id="orders">
+  <h2 class="section-title"><span class="num">6</span> <span data-i18n="sec.orders">Orders &amp; Sales</span></h2>
+  <div class="toc-sub auto" data-anchor="orders"></div>
+
+  <p class="lead">Orders are the heart of the system. There are two types: <strong>private / individual orders</strong> (customer information is typed into the order) and <strong>organization orders</strong> (linked to a saved <a href="#customers">customer record</a>). Every order can hold several products, plus optional dimensions, discounts, service charge and VAT.</p>
+
+  <h3 class="sub-title" id="orders-types" data-i18n="sub.orderTypes">Order types</h3>
+  <div class="table-wrap">
+  <table class="doc-table">
+    <thead><tr><th data-i18n="tbl.type">Type</th><th data-i18n="tbl.detail">Detail</th></tr></thead>
+    <tbody>
+      <tr><td>Private / Individual Order</td><td data-i18n="tbl.otype1">Customer name, address and phone are entered directly on the order screen (menu: <em>&quot;Add Order&quot;</em>).</td></tr>
+      <tr><td>Organization Order</td><td data-i18n="tbl.otype2">Linked to a saved organization customer — you pick the customer and their details are pulled in (menu: <em>&quot;Add Organization Order&quot;</em>).</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="sub-title" id="orders-create" data-i18n="sub.orderCreate">Creating an order</h3>
+  <ol class="steps">
+    <li><b data-i18n="st.o1">Choose the order type</b> <span data-i18n="st.o1p">(Add Order for private, Add Organization Order for organizations).</span></li>
+    <li><b data-i18n="st.o2">Select products.</b> <span data-i18n="st.o2p">Add products to the order — for each one set the quantity; for measurement-based items (e.g. glass), enter the <strong>height and width</strong> and the area (<strong>kaaree</strong>) is calculated automatically.</span></li>
+    <li><b data-i18n="st.o3">Set customer details</b> <span data-i18n="st.o3p">(name, phone, address) — or pick an existing organization customer.</span></li>
+    <li><b data-i18n="st.o4">Apply charges and discount</b> <span data-i18n="st.o4p">— service charge and VAT/TOT are calculated automatically from the rates set in company settings. You can also enter a discount.</span></li>
+    <li><b data-i18n="st.o5">Save the order.</b> <span data-i18n="st.o5p">Stock is reduced automatically for every product sold, and an SMS receipt is sent if SMS is enabled.</span></li>
+  </ol>
+
+  <div class="alert alert-info"><span class="a-ttl" data-i18n="al.bill">Bill number:</span> <span data-i18n="p.billNo">The system creates a unique bill number from the last 5 digits of the customer's phone plus a counter &mdash; for example <code>12344-0001</code>.</span></div>
+  <div class="alert alert-success"><span class="a-ttl" data-i18n="al.autoStock">Stock is automatic:</span> <span data-i18n="p.autoStock">Placing an order reduces product quantity. Editing an order restores the old stock and re-deducts for the new items, so your stock always stays accurate.</span></div>
+
+  <h3 class="sub-title" id="orders-edit" data-i18n="sub.orderEdit">Viewing and editing orders</h3>
+  <ul>
+    <li data-i18n="p.oEdit1"><strong>Manage Orders</strong> — lists all private orders (searchable table).</li>
+    <li data-i18n="p.oEdit2"><strong>Manage Organization Orders</strong> — lists all organization orders.</li>
+    <li data-i18n="p.oEdit3">Click <em>Edit</em> to change products, quantities, customer details or discounts. The order and its stock are recalculated.</li>
+  </ul>
+
+  <h3 class="sub-title" id="orders-payment" data-i18n="sub.payment">Payments</h3>
+  <p data-i18n="p.payment">Each order has a payment status and a payment history. You can record multiple payments against one order (useful for installments on loans).</p>
+  <div class="table-wrap">
+  <table class="doc-table">
+    <thead><tr><th data-i18n="tbl.payStatus">Payment status</th><th data-i18n="tbl.description">Description</th></tr></thead>
+    <tbody>
+      <tr><td>Paid</td><td data-i18n="tbl.psPaid">The order is fully paid.</td></tr>
+      <tr><td>Advance Payment</td><td data-i18n="tbl.psAdvance">Customer paid only part (advance/partial).</td></tr>
+      <tr><td>Loan / Unpaid</td><td data-i18n="tbl.psLoan">No payment yet — a credit/loan order (the dashboard tracks the total loan amount).</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p data-i18n="p.payMethods">Payment methods: <strong>Cash</strong>, <strong>Bank Transfer</strong>, <strong>Mobile Transfer</strong>, and <strong>Telebirr</strong>. The order payment screen also lets you enter a Telebirr transaction number; the system can verify it automatically (see <a href="#telebirr">Telebirr Verification</a>). When a payment is recorded, an SMS confirmation is sent if SMS is enabled.</p>
+
+  <div class="codeblock"><div class="cb-head"><span>Payment types used by the system</span><button class="copy" data-i18n="ui.copy">Copy</button></div><pre><code>payment_types:  0 = Cash
+                1 = Bank Transfer
+                2 = Mobile Transfer
+                3 = Telebirr
+
+paid_status:    0 = Loan / Unpaid
+                1 = Paid
+                2 = Advance Payment</code></pre></div>
+
+  <h3 class="sub-title" id="orders-process" data-i18n="sub.process">Order processing workflow</h3>
+  <p data-i18n="p.process">Orders move through three states. Use the <strong>Order Process</strong> page to update them.</p>
+  <div class="table-wrap">
+  <table class="doc-table">
+    <thead><tr><th data-i18n="tbl.step">Step</th><th data-i18n="tbl.description">Description</th></tr></thead>
+    <tbody>
+      <tr><td>Not Processed</td><td data-i18n="tbl.pr1">Order received, work not started.</td></tr>
+      <tr><td>Under Process</td><td data-i18n="tbl.pr2">Work is in progress.</td></tr>
+      <tr><td>Delivered</td><td data-i18n="tbl.pr3">Order completed and handed to the customer.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ol class="steps">
+    <li><b data-i18n="st.op1">Open Order Process</b> <span data-i18n="st.op1p">from the menu.</span></li>
+    <li><b data-i18n="st.op2">Choose an order</b> <span data-i18n="st.op2p">and set its status (Not Processed / Under Process / Delivered).</span></li>
+    <li><b data-i18n="st.op3">Save.</b> <span data-i18n="st.op3p">Each status change is recorded with the date, and a status-change SMS is sent to the customer if SMS is enabled.</span></li>
+  </ol>
+
+  <h3 class="sub-title" id="orders-receipt" data-i18n="sub.receipt">Printing receipts</h3>
+  <p data-i18n="p.receipt">Every order can print a receipt/invoice. The receipt is optimized for <strong>thermal printers</strong> and uses your configured <a href="#configuration-paper">paper size</a> (for example 80 mm wide x 297 mm). It prints automatically when the page opens and is written for your local audience (in Afan Oromo). It shows the bill number, customer, items, gross amount, service charge, VAT, discount and net amount.</p>
+  <div class="codeblock"><div class="cb-head"><span>Receipt fields example</span><button class="copy" data-i18n="ui.copy">Copy</button></div><pre><code>Bill No: 12344-0001        Date: 11/09/2026
+Customer: Abebe Kebede      Phone: 0912 345 678
+-------------------------------------------
+Item          Qty   Rate     Amount
+Glass 4mm     2     500.00   1,000.00
+-------------------------------------------
+Gross amount:              1,000.00
+Service charge (5%):          50.00
+VAT/TOT (15%):               150.00
+Discount:                     30.00
+NET AMOUNT:                1,170.00</code></pre></div>
+  <div class="alert alert-info"><span class="a-ttl" data-i18n="al.printer">Printer tip:</span> <span data-i18n="p.printer">Receipt text follows the paper width you set in Configuration &rarr; Printer. For standard A4 invoices use a larger width.</span></div>
+</section>
+
+<!-- ===================== CUSTOMERS ===================== -->
+<section class="doc-section" id="customers">
+  <h2 class="section-title"><span class="num">7</span> <span data-i18n="sec.customers">Customers</span></h2>
+  <div class="toc-sub auto" data-anchor="customers"></div>
+
+  <p class="lead">Customers in this system are <strong>organization customers</strong> — companies, offices or institutions you sell to. They are linked from organization orders so you do not retype their details every time.</p>
+
+  <h3 class="sub-title" id="cust-fields" data-i18n="sub.custFields">Customer fields</h3>
+  <div class="table-wrap">
+  <table class="doc-table">
+    <thead><tr><th>Field</th><th data-i18n="tbl.description">Description</th></tr></thead>
+    <tbody>
+      <tr><td>Username</td><td data-i18n="tbl.cUser">A label for the customer record.</td></tr>
+      <tr><td>Position</td><td data-i18n="tbl.cPos">The employee position / role of the contact person.</td></tr>
+      <tr><td>Organization Name</td><td data-i18n="tbl.cName">The company / organization name.</td></tr>
+      <tr><td>Organization Address</td><td data-i18n="tbl.cAddr">The organization's address.</td></tr>
+      <tr><td>Phone</td><td data-i18n="tbl.cPhone">Phone number — used for SMS and for bill number generation on orders.</td></tr>
+      <tr><td>Customer Type</td><td data-i18n="tbl.cType">Distinguishes individual vs. organization customers.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="sub-title" id="cust-manage" data-i18n="sub.custManage">Managing customers</h3>
+  <ol class="steps">
+    <li><b data-i18n="st.c1">Go to Customers &rarr; Add Customers</b> <span data-i18n="st.c1p">and fill the organization details.</span></li>
+    <li><b data-i18n="st.c2">Use Manage Customers</b> <span data-i18n="st.c2p">to view, edit or remove records.</span></li>
+    <li><b data-i18n="st.c3">Create an organization order</b> <span data-i18n="st.c3p">and choose the customer — their name and address are reused automatically.</span></li>
+  </ol>
+</section>
+
+<!-- ===================== PAYMENT ACCOUNTS ===================== -->
+<section class="doc-section" id="payment-accounts">
+  <h2 class="section-title"><span class="num">8</span> <span data-i18n="sec.paymentAccounts">Payment Accounts</span></h2>
+  <div class="toc-sub auto" data-anchor="payment-accounts"></div>
+
+  <p class="lead">Payment accounts are the bank and mobile-money accounts where your customers send money. There are two categories: <strong>bank</strong> (for bank transfers) and <strong>telebirr</strong> (for Telebirr mobile money).</p>
+
+  <h3 class="sub-title" id="acct-fields" data-i18n="sub.acctFields">Account fields</h3>
+  <div class="table-wrap">
+  <table class="doc-table">
+    <thead><tr><th>Field</th><th data-i18n="tbl.description">Description</th></tr></thead>
+    <tbody>
+      <tr><td>Bank / Provider Name</td><td data-i18n="tbl.acctBank">e.g. Commercial Bank of Ethiopia, Ethio Telecom Telebirr.</td></tr>
+      <tr><td>Account Name</td><td data-i18n="tbl.acctName">The account holder name.</td></tr>
+      <tr><td>Account Number</td><td data-i18n="tbl.acctNumber">The account number; for Telebirr the registered phone number.</td></tr>
+      <tr><td>Account Type</td><td data-i18n="tbl.acctType">Type/category of the account.</td></tr>
+      <tr><td>Category</td><td data-i18n="tbl.acctCat"><code>bank</code> or <code>telebirr</code>.</td></tr>
+      <tr><td>Is Default</td><td data-i18n="tbl.acctDefault">One default account per category — suggested for customers. Only one active default can exist per category.</td></tr>
+      <tr><td>Active</td><td data-i18n="tbl.acctActive">Whether the account can be used.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <ol class="steps">
+    <li><b data-i18n="st.b1">Go to Payment Accounts (Banks).</b> <span data-i18n="st.b1p">You reach it from the Configuration page &rarr; Payment Accounts tab, or the dedicated menu item.</span></li>
+    <li><b data-i18n="st.b2">Add an account</b> <span data-i18n="st.b2p">choose category (bank or telebirr) and fill the details.</span></li>
+    <li><b data-i18n="st.b3">Mark it as default</b> <span data-i18n="st.b3p">so it is pre-selected when customers choose how to pay.</span></li>
+  </ol>
+  <div class="alert alert-warn"><span class="a-ttl">Telebirr accounts matter:</span> <span data-i18n="p.banks">Telebirr verification cross-checks the credited account in a receipt against the Telebirr accounts you list here. Keep this list up to date.</span></div>
+</section>
+
+<!-- ===================== SMS ===================== -->
+<section class="doc-section" id="sms">
+  <h2 class="section-title"><span class="num">9</span> <span data-i18n="sec.sms">SMS Notifications</span></h2>
+  <div class="toc-sub auto" data-anchor="sms"></div>
+
+  <p class="lead">The system can send SMS messages to customers automatically using the Ethiopian <strong>GeeSMS</strong> gateway. Messages are sent when an order is created, when an order status changes, and when a payment is received.</p>
+
+  <h3 class="sub-title" id="sms-setup" data-i18n="sub.smsSetup">Setting up SMS</h3>
+  <ol class="steps">
+    <li><b data-i18n="st.s1">Get a GeeSMS API token</b> <span data-i18n="st.s1p">from <code>geezsms.com/#/api</code>.</span></li>
+    <li><b data-i18n="st.s2">Go to System Configuration &rarr; Company tab.</b></li>
+    <li><b data-i18n="st.s3">Enable SMS</b> <span data-i18n="st.s3p">set the API token and (optionally) the shortcode ID.</span></li>
+    <li><b data-i18n="st.s4">Click &quot;Send Test SMS&quot;</b> <span data-i18n="st.s4p">enter a phone number and a test message to check that the API works.</span></li>
+  </ol>
+
+  <h3 class="sub-title" id="sms-behaviour" data-i18n="sub.smsBehaviour">When SMS is sent</h3>
+  <ul>
+    <li data-i18n="p.sms1">Order created &mdash; confirmation to the customer.</li>
+    <li data-i18n="p.sms2">Order status changed (process step updated).</li>
+    <li data-i18n="p.sms3">Payment received &mdash; receipt/confirmation SMS.</li>
+  </ul>
+  <p data-i18n="p.smsNorm">Phone numbers are normalised to Ethiopian international format (for example 0911... &rarr; 25191...). If an SMS fails (bad credit, offline), the order still succeeds — SMS never blocks a sale.</p>
+
+  <h3 class="sub-title" id="sms-log" data-i18n="sub.smsLog">SMS log</h3>
+  <p data-i18n="p.smsLog">The <strong>SMS Log</strong> page shows every message sent: order/bill, phone, message text, type (order_created, status_change, payment), delivery status and the raw API response. Use it to diagnose undelivered messages.</p>
+
+  <div class="codeblock"><div class="cb-head"><span>GeeSMS API (REST)</span><button class="copy" data-i18n="ui.copy">Copy</button></div><pre><code>POST https://api.geezsms.com/api/v1/sms/send
+Headers :  Content-Type: application/json
+Body    :  {
+             "token": "YOUR_API_TOKEN",
+             "to": "251911223344",
+             "message": "Your order is ready!",
+             "shortcode": "SHORTCODE_ID"
+           }</code></pre></div>
+</section>
+
+<!-- ===================== TELEBIRR ===================== -->
+<section class="doc-section" id="telebirr">
+  <h2 class="section-title"><span class="num">10</span> <span data-i18n="sec.telebirr">Telebirr Payment Verification</span></h2>
+  <div class="toc-sub auto" data-anchor="telebirr"></div>
+
+  <p class="lead">When a customer pays with Telebirr, the system can verify the payment automatically by checking the official Ethio Telecom receipt page. This protects you against fake payment screenshots.</p>
+
+  <h3 class="sub-title" id="tt-how" data-i18n="sub.ttHow">How verification works</h3>
+  <ol class="steps">
+    <li><b data-i18n="st.t1">Customer pays via Telebirr</b> <span data-i18n="st.t1p">and shares the transaction number (the 10+ digit TT number).</span></li>
+    <li><b data-i18n="st.t2">Enter the TT number</b> <span data-i18n="st.t2p">on the order payment screen.</span></li>
+    <li><b data-i18n="st.t3">The system checks the receipt</b> <span data-i18n="st.t3p">using <code>transactioninfo.ethiotelecom.et</code> and verifies that:</span>
+      <ul>
+        <li data-i18n="st.t3a">the transaction was found,</li>
+        <li data-i18n="st.t3b">its status is <em>Completed</em>,</li>
+        <li data-i18n="st.t3c">the payment was made today, and</li>
+        <li data-i18n="st.t3d">the credited account matches one of your configured Telebirr accounts.</li>
+      </ul>
+    </li>
+    <li><b data-i18n="st.t4">Result is shown</b> <span data-i18n="st.t4p">&mdash; verified, or a reason why not (not found / not completed / wrong account).</span></li>
+  </ol>
+
+  <div class="alert alert-info"><span class="a-ttl" data-i18n="al.verify">Verification status fields:</span>
+    <ul style="margin-top:6px">
+      <li><code>found</code> &mdash; whether the receipt exists.</li>
+      <li><code>verified</code> &mdash; found + completed + paid today + account matches.</li>
+      <li><code>account_matches</code> &mdash; whether the credited account is in your account list.</li>
+    </ul>
+  </div>
+
+  <h3 class="sub-title" id="tt-req" data-i18n="sub.ttReq">Requirements</h3>
+  <ul>
+    <li data-i18n="p.tt1">An Internet connection from the business server to Ethio Telecom.</li>
+    <li data-i18n="p.tt2">Your Telebirr accounts added in <a href="#payment-accounts">Payment Accounts</a> with category <code>telebirr</code>.</li>
+  </ul>
+  <div class="alert alert-warn"><span class="a-ttl" data-i18n="al.note">Note:</span> <span data-i18n="p.tt3">Verification only confirms the payment reached one of your accounts <em>today</em>. Always also check that the paid amount matches the order total.</span></div>
+</section>
+
+<!-- ===================== REPORTS ===================== -->
+<section class="doc-section" id="reports">
+  <h2 class="section-title"><span class="num">11</span> <span data-i18n="sec.reports">Reports &amp; Analytics</span></h2>
+  <div class="toc-sub auto" data-anchor="reports"></div>
+
+  <p class="lead">Reports help you understand your income. You get both a visual yearly chart and a detailed, filterable list of every payment.</p>
+
+  <h3 class="sub-title" id="rep-chart" data-i18n="sub.repChart">Monthly income chart</h3>
+  <ul>
+    <li data-i18n="p.rep1">Shows total sales per month for a chosen year as a bar chart.</li>
+    <li data-i18n="p.rep2">Choose the year from the dropdown (available years are listed automatically).</li>
+  </ul>
+
+  <h3 class="sub-title" id="rep-detail" data-i18n="sub.repDetail">Sales detail report</h3>
+  <ul>
+    <li data-i18n="p.rep3">Filter payments by a date range and see each payment record.</li>
+    <li data-i18n="p.rep4">Columns include: bill number, customer name, customer type, datetime, total amount, paid amount, due amount, payment type and payment status.</li>
+    <li data-i18n="p.rep5">Use it to see who still owes money (due amount &gt; 0) and to reconcile cash, transfer and Telebirr payments.</li>
+  </ul>
+
+  <div class="alert alert-warn"><span class="a-ttl" data-i18n="al.perms">Permissions:</span> <span data-i18n="p.repPerm">Only users whose group includes <code>viewReports</code> can open the reports pages.</span></div>
+
+  <h3 class="sub-title" id="rep-sample" data-i18n="sub.repSample">Typical usage</h3>
+  <ol class="steps">
+    <li><b data-i18n="st.r1">Open Reports &rarr;</b> <span data-i18n="st.r1p"><em>Income Report</em> for the chart, or <em>Sales Detail</em> for the list.</span></li>
+    <li><b data-i18n="st.r2">Pick the year or date range.</b></li>
+    <li><b data-i18n="st.r3">Review/export</b> <span data-i18n="st.r3p">— the detail table supports searching, sorting and pagination.</span></li>
+  </ol>
+</section>
+
+<!-- ===================== CONFIGURATION ===================== -->
+<section class="doc-section" id="configuration">
+  <h2 class="section-title"><span class="num">12</span> <span data-i18n="sec.config">Company Settings &amp; Configuration</span></h2>
+  <div class="toc-sub auto" data-anchor="configuration"></div>
+
+  <p class="lead">The System Configuration page is where you customise the whole system for your business. It has several tabs: <strong>Company</strong>, <strong>Payment Accounts</strong>, <strong>Printer</strong>, and <strong>Paper</strong>.</p>
+
+  <h3 class="sub-title" id="configuration-company" data-i18n="sub.cfgCompany">Company tab</h3>
+  <div class="table-wrap">
+  <table class="doc-table">
+    <thead><tr><th>Setting</th><th data-i18n="tbl.description">Description</th></tr></thead>
+    <tbody>
+      <tr><td>Company Name</td><td data-i18n="tbl.cfgName">Your business name.</td></tr>
+      <tr><td>Charge Amount (%)</td><td data-i18n="tbl.cfgCharge">Service charge percentage added on orders.</td></tr>
+      <tr><td>VAT (%)</td><td data-i18n="tbl.cfgVat">VAT / TOT percentage added on orders.</td></tr>
+      <tr><td>Address / Phone / Country</td><td data-i18n="tbl.cfgAddr">Your location and contact details.</td></tr>
+      <tr><td>Message</td><td data-i18n="tbl.cfgMsg">A personalized message shown on receipts.</td></tr>
+      <tr><td>Website / Facebook / Telegram / TikTok</td><td data-i18n="tbl.cfgSocial">Your online links.</td></tr>
+      <tr><td>Currency</td><td data-i18n="tbl.cfgCur">Currency symbol used across the system (150+ world currencies, e.g. ETB, USD, EUR).</td></tr>
+      <tr><td>SMS Settings</td><td data-i18n="tbl.cfgSms">Enable SMS, GeeSMS API token, shortcode ID, and <em>Send Test SMS</em> button.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="sub-title" id="configuration-printer" data-i18n="sub.cfgPrinter">Printer tab</h3>
+  <p data-i18n="p.cfgPrinter">Choose the receipt printer type used in the shop.</p>
+
+  <h3 class="sub-title" id="configuration-paper" data-i18n="sub.cfgPaper">Paper tab</h3>
+  <p data-i18n="p.cfgPaper">Set the paper <strong>width</strong> and <strong>height</strong> in millimetres. Typical thermal receipt paper is 80 mm wide (receipts print to this exact width).</p>
+  <div class="codeblock"><div class="cb-head"><span>Example paper settings</span><button class="copy" data-i18n="ui.copy">Copy</button></div><pre><code>Thermal receipt paper :  width 80 mm,  height 297 mm
+A4 invoice paper      :  width 210 mm, height 297 mm</code></pre></div>
+
+  <div class="alert alert-success"><span class="a-ttl" data-i18n="al.changes">Immediate effect:</span> <span data-i18n="p.cfgEffect">Most settings (rates, currency, social links, paper size) affect new orders and receipts right away. Service charge and VAT rates apply to orders created after you save.</span></div>
+</section>

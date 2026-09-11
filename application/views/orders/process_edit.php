@@ -122,18 +122,45 @@
                 <br /> <br/>
 
                 <div class="col-md-6 col-xs-12 pull pull-center">
+<?php $current_process_status = isset($order_data['order']['process_status']) ? $order_data['order']['process_status'] : 0; ?>
+<div class="form-group">
+                    <label class="col-sm-5 control-label" style="text-align:left;">Current Status</label>
+                    <div class="col-sm-7">
+                      <?php if($current_process_status == 2): ?>
+                        <span class="label label-success">Delivered</span>
+                      <?php elseif($current_process_status == 1): ?>
+                        <span class="label label-warning">Under Process</span>
+                      <?php else: ?>
+                        <span class="label label-danger">Not Processed</span>
+                      <?php endif; ?>
+                    </div>
+                  </div>
+<div class="form-group">
+                    <label class="col-sm-5 control-label" style="text-align:left;">Quick Change</label>
+                    <div class="col-sm-7">
+                      <?php if(in_array('updateOrder', $user_permission)): ?>
+                        <?php if($current_process_status != 1): ?>
+                          <button type="button" class="btn btn-warning btn-sm btn-process-status" data-id="<?php echo $order_data['order']['id']; ?>" data-status="1"><i class="fa fa-refresh"></i> Under Process</button>
+                        <?php endif; ?>
+                        <?php if($current_process_status != 2): ?>
+                          <button type="button" class="btn btn-success btn-sm btn-process-status" data-id="<?php echo $order_data['order']['id']; ?>" data-status="2"><i class="fa fa-check"></i> Mark Processed</button>
+                        <?php endif; ?>
+                      <?php endif; ?>
+                    </div>
+                  </div>
 <div class="form-group">
                     <label class="col-sm-5 control-label" style="text-align:left;">Order Process Status</label>
                     <div class="col-sm-7">
                     <select name="status" class="form-control">
-                        <option  value="1">Under Process</option>
-                        <option value="2">Processed</option>
+                        <option  value="1" <?php if($current_process_status == 1) echo 'selected'; ?>>Under Process</option>
+                        <option value="2" <?php if($current_process_status == 2) echo 'selected'; ?>>Processed</option>
                        
                     </select>
                  
                    </div>
                   </div>
       <input type="hidden"  class="form-control" id="bill_no_value" name="bill_no_value" placeholder="Enter Customer Phone" value="<?php echo $order_data['order']['bill_no'] ?>" autocomplete="off">
+      <input type="hidden" id="order_id_hidden" value="<?php echo $order_data['order']['id']; ?>">
                     
                 </div>
               </div>
@@ -192,6 +219,46 @@
 
     $("#processNav").addClass('active');
     $("#manageOrdersNav").addClass('active');
+    
+    // quick change of status: Not Processed -> Under Process -> Processed
+    $(document).on('click', '.btn-process-status', function(){
+      var btn = $(this);
+      var order_id = btn.data('id');
+      var status = btn.data('status');
+
+      if(!order_id) { return; }
+
+      btn.prop('disabled', true);
+
+      $.ajax({
+        url: base_url + 'orders/updateProcessStatusAjax',
+        type: 'POST',
+        data: {order_id: order_id, status: status},
+        dataType: 'json',
+        success:function(response) {
+          if(response.success === true) {
+            $("#messages").html('<div class="alert alert-success alert-dismissible" role="alert">'+
+              '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+              '<strong> <span class="glyphicon glyphicon-ok-sign"></span> </strong>'+response.messages+
+            '</div>');
+            setTimeout(function(){ window.location.reload(); }, 600);
+          } else {
+            btn.prop('disabled', false);
+            $("#messages").html('<div class="alert alert-warning alert-dismissible" role="alert">'+
+              '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+              '<strong> <span class="glyphicon glyphicon-exclamation-sign"></span> </strong>'+response.messages+
+            '</div>');
+          }
+        },
+        error:function() {
+          btn.prop('disabled', false);
+          $("#messages").html('<div class="alert alert-danger alert-dismissible" role="alert">'+
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+            '<strong>Request error. Please try again.</strong>'+
+          '</div>');
+        }
+      });
+    });
     
     
     // Add new row in the table 

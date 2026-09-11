@@ -18,11 +18,23 @@ application/logs/*
 
 readmeforme.md
 
+# Confidential / private
+/marketing/
+/agreements/
+
+# Credentials & API integration
+/application/config/geezsms.php
+/bank_integration.sql
+/sms_integration.sql
+
 # Junk / deployment artifacts
 *.zip
 __MACOSX/
 nbproject/
 index.html
-
+!documentation/index.html
+site.html
 # macOS
 .DS_Store
+
+marketing/*

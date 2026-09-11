@@ -1,0 +1,232 @@
+<!-- ===================== FAQ ===================== -->
+<section class="doc-section" id="faq">
+  <h2 class="section-title"><span class="num">13</span> <span data-i18n="sec.faq">Frequently Asked Questions (FAQ)</span></h2>
+  <div class="toc-sub auto" data-anchor="faq"></div>
+
+  <p data-i18n="p.faqIntro">Quick answers to the most common questions. If your question is not here, use the <a href="#feedback">feedback form</a> or <a href="#contact">contact us</a>.</p>
+
+  <div class="faq-item" data-faq="1"><button class="faq-q" type="button"><span class="c">1</span><span data-i18n="q.f1">What do I do if I forgot my password?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f1">Ask an administrator (a user with &quot;updateUser&quot; permission) to open Users &rarr; Edit your account and set a new password. Because passwords are stored securely hashed, nobody (even the admin) can see your old password.</div></div>
+
+  <div class="faq-item" data-faq="2"><button class="faq-q" type="button"><span class="c">2</span><span data-i18n="q.f2">How do I give a staff member permission to sell but not see reports?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f2">Create or edit a group in Groups, tick the order permissions (createOrder / viewOrder, etc.) but leave <code>viewReports</code> unticked, then assign that group to the user in Users.</div></div>
+
+  <div class="faq-item" data-faq="3"><button class="faq-q" type="button"><span class="c">3</span><span data-i18n="q.f3">Why can't I delete a group?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f3">A group that is assigned to at least one user cannot be deleted to protect your data. First reassign or remove the users who belong to that group, then delete it.</div></div>
+
+  <div class="faq-item" data-faq="4"><button class="faq-q" type="button"><span class="c">4</span><span data-i18n="q.f4">How is stock updated when I sell?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f4">Automatically. Creating an order reduces product quantity. Editing an order restores the old quantity and deducts for the new items. If a product shows &quot;Out of Stock&quot; it cannot be sold (quantity &le; 0).</div></div>
+
+  <div class="faq-item" data-faq="5"><button class="faq-q" type="button"><span class="c">5</span><span data-i18n="q.f5">How do I record a partial payment or a loan order?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f5">Record a payment on the order and choose <code>Advance Payment</code> for partial or <code>Loan / Unpaid</code> for credit. You can add multiple payments later (installments). The dashboard shows total outstanding loans.</div></div>
+
+  <div class="faq-item" data-faq="6"><button class="faq-q" type="button"><span class="c">6</span><span data-i18n="q.f6">How do I verify a Telebirr payment?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f6">On the order payment screen enter the Telebirr <em>TT number</em> from the customer. The system checks the official Ethio Telecom receipt and tells you if the payment is verified (completed, made today, credited to one of your Telebirr accounts).</div></div>
+
+  <div class="faq-item" data-faq="7"><button class="faq-q" type="button"><span class="c">7</span><span data-i18n="q.f7">SMS is not being delivered. What should I check?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f7">Check: (1) SMS is <em>Enabled</em> in Configuration &rarr; Company; (2) the GeeSMS API token is correct and valid; (3) there is enough GeeSMS credit; (4) the phone number is valid (numbers are converted to 2519... format); (5) the SMS Log shows the API response — it explains failures.</div></div>
+
+  <div class="faq-item" data-faq="8"><button class="faq-q" type="button"><span class="c">8</span><span data-i18n="q.f8">How do I change the currency, VAT or service charge?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f8">Open System Configuration &rarr; Company tab, change Currency, Charge Amount (%) or VAT (%), then click Save. New orders will use the new values.</div></div>
+
+  <div class="faq-item" data-faq="9"><button class="faq-q" type="button"><span class="c">9</span><span data-i18n="q.f9">My receipt prints too wide / too narrow for the paper.</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f9">Open System Configuration &rarr; Paper tab and set the correct width (mm). 80 mm is standard for thermal receipt printers; use 210 mm for A4. Also confirm the printer type in the Printer tab.</div></div>
+
+  <div class="faq-item" data-faq="10"><button class="faq-q" type="button"><span class="c">10</span><span data-i18n="q.f10">Can I undo an order I created by mistake?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f10">If your permission allows deleting orders, you can delete the order — stock is restored automatically. Otherwise contact the administrator to correct it.</div></div>
+
+  <div class="faq-item" data-faq="11"><button class="faq-q" type="button"><span class="c">11</span><span data-i18n="q.f11">What are the default admin login details?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f11">Email <code>admin@admin.com</code> and password <code>password</code>. Change this password immediately after the first login on a live system.</div></div>
+
+  <div class="faq-item" data-faq="12"><button class="faq-q" type="button"><span class="c">12</span><span data-i18n="q.f12">Where can I see what SMS messages were sent?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f12">Open the SMS Log page (requires the viewOrder permission). It shows every message, its status and the raw API response.</div></div>
+
+  <div class="faq-item" data-faq="13"><button class="faq-q" type="button"><span class="c">13</span><span data-i18n="q.f13">How do I add multiple payment accounts?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f13">Go to System Configuration &rarr; Payment Accounts tab and add each account. Mark one as default per category (bank / telebirr). Telebirr accounts listed here are used to verify receipts.</div></div>
+
+  <div class="faq-item" data-faq="14"><button class="faq-q" type="button"><span class="c">14</span><span data-i18n="q.f14">Is my data safe? Do you see my passwords?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f14">Passwords are stored using modern hashing (bcrypt) — they can never be read, even by administrators. The system runs on your own server, so your business data remains on your infrastructure. See the Privacy Policy below.</div></div>
+
+  <div class="faq-item" data-faq="15"><button class="faq-q" type="button"><span class="c">15</span><span data-i18n="q.f15">Can any user change the company settings?</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="a.f15">No. Only users whose group includes <code>updateCompany</code> or <code>updateSetting</code> permissions can open System Configuration.</div></div>
+</section>
+
+<!-- ===================== TROUBLESHOOTING ===================== -->
+<section class="doc-section" id="troubleshooting">
+  <h2 class="section-title"><span class="num">14</span> <span data-i18n="sec.troubleshooting">Troubleshooting</span></h2>
+  <div class="toc-sub auto" data-anchor="troubleshooting"></div>
+
+  <p data-i18n="p.tsIntro">Common problems and how to fix them.</p>
+
+  <div class="faq-item" data-faq="ts1" data-open="1"><button class="faq-q" type="button"><span class="c">!</span><span data-i18n="ts.t1">The login page will not open (white screen / 404).</span><span class="st">&#9660;</span></button><div class="faq-a">
+    <ol class="steps">
+      <li><b data-i18n="ts.t1s1">Check Apache</b> <span data-i18n="ts.t1s1p">is running in WAMP/XAMPP.</span></li>
+      <li><b data-i18n="ts.t1s2">Check the URL</b> <span data-i18n="ts.t1s2p">matches your project folder name (e.g. <code>http://localhost/ERP_qubeteck/</code>).</span></li>
+      <li><b data-i18n="ts.t1s3">Enable mod_rewrite</b> <span data-i18n="ts.t1s3p">in your Apache config; the system uses the bundled <code>.htaccess</code>.</span></li>
+      <li><b data-i18n="ts.t1s4">Check the MySQL database</b> <span data-i18n="ts.t1s4p">&quot;stock&quot; exists and was imported.</span></li>
+    </ol>
+  </div></div>
+
+  <div class="faq-item" data-faq="ts2"><button class="faq-q" type="button"><span class="c">!</span><span data-i18n="ts.t2">&quot;Forbidden&quot; or permission errors on pages.</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="ts.a2">Your user group does not have the permission for that page. Ask the administrator to add the permission to your <a href="#groups">group</a>, or log in with an administrator account.</div></div>
+
+  <div class="faq-item" data-faq="ts3"><button class="faq-q" type="button"><span class="c">!</span><span data-i18n="ts.t3">My product image does not upload.</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="ts.a3">The image must be GIF, JPG or PNG and smaller than 1 MB. Reduce the file size and try again. Also check the server's file upload limits (<code>upload_max_filesize</code> in php.ini).</div></div>
+
+  <div class="faq-item" data-faq="ts4"><button class="faq-q" type="button"><span class="c">!</span><span data-i18n="ts.t4">Stock quantity is wrong after an order was edited.</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="ts.a4">The system restores and re-deducts stock when an order is edited. If numbers still look wrong, check that no other user edited the same order/stock at the same time, and review the order's item list. Contact support if it persists.</div></div>
+
+  <div class="faq-item" data-faq="ts5"><button class="faq-q" type="button"><span class="c">!</span><span data-i18n="ts.t5">Telebirr verification says &quot;not found&quot;.</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="ts.a5">Check that you entered the exact TT number, that the payment was actually completed, and that your server has Internet access to <code>transactioninfo.ethiotelecom.et</code>. If the customer paid before midnight, it will not pass the same-day check today.</div></div>
+
+  <div class="faq-item" data-faq="ts6"><button class="faq-q" type="button"><span class="c">!</span><span data-i18n="ts.t6">Reports / dashboard numbers do not update.</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="ts.a6">Dashboard and report figures are calculated from orders and payments. Refresh the page (F5) to get fresh numbers. If a report seems wrong, filter the sales detail report by date and compare payment records.</div></div>
+
+  <div class="faq-item" data-faq="ts7"><button class="faq-q" type="button"><span class="c">!</span><span data-i18n="ts.t7">The site is slow or the database is not connecting.</span><span class="st">&#9660;</span></button><div class="faq-a" data-i18n="ts.a7">Make sure the MySQL service is running. Check <code>application/config/database.php</code> for the correct hostname, username, password and database name. On large databases, keep the number of open browser tabs low.</div></div>
+</section>
+
+<!-- ===================== CHANGELOG ===================== -->
+<section class="doc-section" id="changelog">
+  <h2 class="section-title"><span class="num">15</span> <span data-i18n="sec.changelog">Updates &amp; Changelog</span></h2>
+  <div class="toc-sub auto" data-anchor="changelog"></div>
+
+  <p data-i18n="p.clIntro">This section is updated whenever the system changes. It keeps you informed about new features, improvements and bug fixes.</p>
+
+  <div class="changelog" id="changelogList">
+    <div class="cl-item">
+      <div class="cl-date">Version 1.0 &mdash; 2026</div>
+      <h4>First release <span class="cl-note new" data-i18n="cl.new">NEW</span></h4>
+      <ul>
+        <li data-i18n="cl.v1a">User management with permission groups (36 permissions).</li>
+        <li data-i18n="cl.v1b">Product catalog: products, brands, categories, stores, attributes.</li>
+        <li data-i18n="cl.v1c">Private and organization orders with multi-item baskets, dimensions (height &times; width), service charge, VAT/TOT and discount.</li>
+        <li data-i18n="cl.v1d">Automatic stock management and low / out-of-stock warnings.</li>
+        <li data-i18n="cl.v1e">Payments: cash, bank transfer, mobile transfer, Telebirr; advance and loan statuses; payment history with installments.</li>
+        <li data-i18n="cl.v1f">Telebirr receipt verification against Ethio Telecom.</li>
+        <li data-i18n="cl.v1g">SMS notifications via GeeSMS with full log.</li>
+        <li data-i18n="cl.v1h">Order processing workflow (not processed / under process / delivered).</li>
+        <li data-i18n="cl.v1i">Thermal receipt printing with configurable paper size (e.g. 80 mm).</li>
+        <li data-i18n="cl.v1j">Reports: monthly sales chart and detailed sales report.</li>
+        <li data-i18n="cl.v1k">Company settings: currency, VAT, service charge, social links, SMS.</li>
+        <li data-i18n="cl.v1l">This multi-language documentation site (EN, AM, OM, TI, SO, HAR).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert alert-info"><span class="a-ttl" data-i18n="cl.future">Coming soon / planned:</span> <span data-i18n="p.clFuture">user activity audit trail, export-to-Excel for reports, and additional report types (profit, best sellers).</span></div>
+</section>
+
+<!-- ===================== PRIVACY ===================== -->
+<section class="doc-section" id="privacy">
+  <h2 class="section-title"><span class="num">16</span> <span data-i18n="sec.privacy">Privacy Policy</span></h2>
+  <div class="toc-sub auto" data-anchor="privacy"></div>
+
+  <p class="muted" data-i18n="p.privacyD">Last updated: 2026</p>
+
+  <h3 class="sub-title" data-i18n="sub.pr1">1. Who we are</h3>
+  <p data-i18n="p.pr1">This documentation and the SOORA ERP system are provided by the business running the system (your company). This policy explains how the system handles information.</p>
+
+  <h3 class="sub-title" data-i18n="sub.pr2">2. Information the system stores</h3>
+  <ul>
+    <li data-i18n="p.pr2a"><strong>Account information</strong> — usernames, email addresses, names, phone numbers and password hashes of staff users.</li>
+    <li data-i18n="p.pr2b"><strong>Business data</strong> — products, orders, customers, payments and reports entered while using the system.</li>
+    <li data-i18n="p.pr2c"><strong>Customer contact details</strong> — names, addresses and phone numbers of individuals and organizations you sell to.</li>
+    <li data-i18n="p.pr2d"><strong>SMS data</strong> — for numbers enabled for SMS, message logs (order, status and payment notifications) retained for delivery tracking.</li>
+  </ul>
+
+  <h3 class="sub-title" data-i18n="sub.pr3">3. How information is protected</h3>
+  <ul>
+    <li data-i18n="p.pr3a">Passwords are stored with strong, one-way hashing (bcrypt). No plain-text passwords are kept, and nobody, including administrators, can read them.</li>
+    <li data-i18n="p.pr3b">Access to each area is controlled by permissions set per user group.</li>
+    <li data-i18n="p.pr3c">The system runs on your own server, so your data stays on your infrastructure and under your control.</li>
+  </ul>
+
+  <h3 class="sub-title" data-i18n="sub.pr4">4. Data sharing</h3>
+  <p data-i18n="p.pr4">The system shares only what is necessary to provide its functions: SMS messages are sent through the GeeSMS gateway; Telebirr verification queries Ethio Telecom's receipt service with the transaction number you provide. Data is not sold to third parties.</p>
+
+  <h3 class="sub-title" data-i18n="sub.pr5">5. Data retention and your rights</h3>
+  <p data-i18n="p.pr5">Data is retained as long as your business needs it. As a business owner you may export or delete business records at any time. Employees and customers should contact the business operating the system to request access, correction or deletion of their personal data.</p>
+
+  <h3 class="sub-title" data-i18n="sub.pr6">6. Changes to this policy</h3>
+  <p data-i18n="p.pr6">We may update this policy as the system grows. The latest version is always published here with a revision date.</p>
+</section>
+
+<!-- ===================== TERMS ===================== -->
+<section class="doc-section" id="terms">
+  <h2 class="section-title"><span class="num">17</span> <span data-i18n="sec.terms">Terms of Service</span></h2>
+  <div class="toc-sub auto" data-anchor="terms"></div>
+
+  <p class="muted" data-i18n="p.termsD">Last updated: 2026</p>
+
+  <h3 class="sub-title" data-i18n="sub.t1">1. Acceptance of terms</h3>
+  <p data-i18n="p.t1">By accessing or using the SOORA ERP system and this documentation, you agree to these Terms of Service. If you use the system on behalf of an organization, that organization agrees to the terms too.</p>
+
+  <h3 class="sub-title" data-i18n="sub.t2">2. Licence</h3>
+  <p data-i18n="p.t2">The SOORA ERP software is licensed under the MIT License. You are free to use, modify and distribute it, provided the copyright and permission notices are preserved. This documentation may be used as a reference for your users of the system.</p>
+
+  <h3 class="sub-title" data-i18n="sub.t3">3. Accounts and responsibilities</h3>
+  <ul>
+    <li data-i18n="p.t3a">You are responsible for safeguarding your login details and for all activity under your account.</li>
+    <li data-i18n="p.t3b">Administrators are responsible for assigning appropriate permissions and for managing staff accounts.</li>
+    <li data-i18n="p.t3c">You must enter accurate information when creating orders, products and customers.</li>
+  </ul>
+
+  <h3 class="sub-title" data-i18n="sub.t4">4. Acceptable use</h3>
+  <ul>
+    <li data-i18n="p.t4a">Use the system only for its intended business purposes.</li>
+    <li data-i18n="p.t4b">Do not attempt to access areas or data you are not permitted to access.</li>
+    <li data-i18n="p.t4c">Do not upload harmful files, or use the system to break any law.</li>
+  </ul>
+
+  <h3 class="sub-title" data-i18n="sub.t5">5. Availability and liability</h3>
+  <p data-i18n="p.t5">The system is provided &quot;as is&quot; and &quot;as available&quot;. While we work to keep it reliable, we do not guarantee uninterrupted availability. To the fullest extent permitted by law, we are not liable for indirect or consequential losses arising from the use of the system. Always keep backups of your database.</p>
+
+  <h3 class="sub-title" data-i18n="sub.t6">6. Changes</h3>
+  <p data-i18n="p.t6">We may update these terms from time to time. Continued use of the system after changes means you accept the updated terms.</p>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="doc-section" id="contact">
+  <h2 class="section-title"><span class="num">18</span> <span data-i18n="sec.contact">Contact &amp; Support</span></h2>
+  <div class="toc-sub auto" data-anchor="contact"></div>
+
+  <p data-i18n="p.contactIntro">Need help with <strong>using</strong> the system? Start with your administrator or the <a href="#faq">FAQ</a>. For help with the <strong>system itself</strong>, installation, or the documentation, contact the business that runs it using the details below.</p>
+
+  <div class="contact-card"><div class="ic">&#128231;</div><div><h4 data-i18n="ct.email">Email</h4><p data-i18n="ct.emailV">support@yourcompany.com</p><p class="muted" data-i18n="ct.emailD">For questions and support requests.</p></div></div>
+  <div class="contact-card"><div class="ic">&#128222;</div><div><h4 data-i18n="ct.phone">Phone</h4><p data-i18n="ct.phoneV">+251 900 000 000</p><p class="muted" data-i18n="ct.phoneD">Business hours: Monday&ndash;Saturday.</p></div></div>
+  <div class="contact-card"><div class="ic">&#128205;</div><div><h4 data-i18n="ct.address">Address</h4><p data-i18n="ct.addressV">Your Business, Chiro, Ethiopia</p></div></div>
+  <div class="contact-card"><div class="ic">&#127760;</div><div><h4 data-i18n="ct.website">Website &amp; social media</h4><p data-i18n="ct.socialV">www.yourcompany.com &bull; Telegram &bull; Facebook &bull; TikTok</p></div></div>
+
+  <div class="alert alert-warn"><span class="a-ttl" data-i18n="al.urgent">Reporting a data issue:</span> <span data-i18n="p.contactNote">If you believe there is a data breach or a security problem, contact the system administrator immediately, and change your password.</span></div>
+</section>
+
+<!-- ===================== FEEDBACK ===================== -->
+<section class="doc-section" id="feedback">
+  <h2 class="section-title"><span class="num">19</span> <span data-i18n="sec.feedback">Feedback &amp; Issue Reporting</span></h2>
+  <div class="toc-sub auto" data-anchor="feedback"></div>
+
+  <p data-i18n="p.fbIntro">Your suggestions help us improve. Use the form below to ask a question, suggest an improvement, or report a problem you found while using the system.</p>
+
+  <form id="feedbackForm" class="card">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="fbName" data-i18n="fb.name">Your name</label>
+        <input type="text" id="fbName" data-i18n-attr-placeholder="fb.namePh" placeholder="Full name">
+      </div>
+      <div class="form-group">
+        <label for="fbEmail" data-i18n="fb.email">Email address</label>
+        <input type="email" id="fbEmail" data-i18n-attr-placeholder="fb.emailPh" placeholder="you@example.com">
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:14px">
+      <label for="fbType" data-i18n="fb.type">Feedback type</label>
+      <select id="fbType">
+        <option data-i18n="fb.typeQ" value="Question">Question</option>
+        <option data-i18n="fb.typeS" value="Suggestion">Suggestion / improvement</option>
+        <option data-i18n="fb.typeB" value="Bug">Bug / issue report</option>
+        <option data-i18n="fb.typeD" value="Documentation">Documentation issue</option>
+        <option data-i18n="fb.typeO" value="Other">Other</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin-top:14px">
+      <label for="fbMsg" data-i18n="fb.message">Your message</label>
+      <textarea id="fbMsg" rows="5" data-i18n-attr-placeholder="fb.msgPh" placeholder="Describe your feedback or the problem you encountered, including any error text..."></textarea>
+    </div>
+    <div style="margin-top:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+      <button type="submit" class="btn btn-accent" data-i18n="fb.submit">Send feedback</button>
+      <button type="reset" class="btn btn-outline" data-i18n="fb.reset">Clear</button>
+      <span class="feedback-note" id="fbMsgNote" style="display:none"></span>
+    </div>
+    <p class="muted" style="font-size:.82rem;margin-top:14px" data-i18n="fb.privacyNote">By submitting this form you agree to be contacted about your feedback. Your information is used only to respond to your message.</p>
+  </form>
+</section>
+
+<div class="doc-footer">
+  <span>&copy; <span id="year">2026</span> <span data-i18n="f.brand">SOORA ERP</span>. <span data-i18n="f.rights">All rights reserved.</span></span>
+  <span>
+    <a href="#privacy" data-i18n="nav.privacy">Privacy Policy</a> &bull;
+    <a href="#terms" data-i18n="nav.terms">Terms of Service</a> &bull;
+    <a href="#contact" data-i18n="nav.contact">Contact</a> &bull;
+    <a href="#feedback" data-i18n="nav.feedback">Feedback</a>
+  </span>
+</div>

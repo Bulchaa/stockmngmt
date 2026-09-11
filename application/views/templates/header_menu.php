@@ -13,6 +13,17 @@
         <span class="sr-only">Toggle navigation</span>
       </a>
 
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="<?php echo base_url('documentation/index.html') ?>" target="_blank" rel="noopener" title="User Guide &amp; Documentation">
+              <i class="fa fa-book"></i>
+              <span class="hidden-xs">Documentation</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
